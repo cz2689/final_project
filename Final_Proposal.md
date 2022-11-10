@@ -4,7 +4,7 @@ Fengdi Zhang, fz2328 Tianyou Wang, tw2838 Qiaoyi Xu, qx2222 Chaoqun
 Zhou, cz2689
 2022-11-10
 
-111 The tentative project title Marijuana Use and Mental Health The
+The tentative project title Marijuana Use and Mental Health The
 motivation for this project There are around 48 million people in US
 using marijuana, and it could lead to various health impacts. Marijuana
 use has been causing significant social impacts and attracting a vast
