@@ -1,0 +1,9 @@
+---
+title: "Proposal"
+author: Fengdi Zhang, fz2328
+        Tianyou Wang, tw2838
+        Qiaoyi Xu, qx2222
+        Chaoqun Zhou, cz2689
+date: "2022-11-10"
+output: github_document
+---
