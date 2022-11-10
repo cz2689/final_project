@@ -46,4 +46,13 @@ Our data comes from National survey on Drug Use and Health 2002-2019.
     analysis our data. In addition, we might have issue of merging data
     set from different source to create our report.
 
-The planned timeline (by the given data, tasks should be finished.)
+### The planned timeline (by the given data, tasks should be finished.)
+
+| Date  | Planned tasks                                                   |
+|-------|-----------------------------------------------------------------|
+| 11/9  | Proposal due                                                    |
+| 11/16 | Finalize dataset and analysis plan (maybe descriptive summaries |
+| 11/23 | Thanksgiving (meet online, discuss coding challenges)           |
+| 11/30 | Finish coding for data analysis                                 |
+| 12/7  | Draft websites and report done                                  |
+| 12/10 | Finalize the report, website; record the screencast             |
