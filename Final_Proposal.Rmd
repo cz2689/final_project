@@ -8,4 +8,14 @@ date: "2022-11-10"
 output: github_document
 ---
 
+<<<<<<< HEAD
 The intended final products
+=======
+
+The tentative project title
+Marijuana Use and Mental Health
+>>>>>>> 68cc8afb97926aa8d164d359ba2418d788c8d34e
+
+
+
+joyce
