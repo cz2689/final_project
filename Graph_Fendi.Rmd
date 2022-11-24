@@ -1,0 +1,56 @@
+---
+title: "Graph"
+author: "Fengdi Zhang"
+date: "2022-11-23"
+output: html_document
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(ggridges)
+```
+
+## Load and Cleaning Data
+
+```{r}
+#load("data/NSDUH_2019.RData")
+
+#graph_boxplot = 
+#PUF2019_100920 %>% 
+#janitor::clean_names() %>% 
+#select(questid2, filedate, age2, mr30est)
+
+#write_csv(graph_boxplot, file = "data/boxplot_dataset.csv")
+```
+
+```{r}
+graph_boxplot = read_csv("data/graph_fendi_dataset.csv") %>% 
+  filter(mr30est != 94 & mr30est != 97 & mr30est != 98 & mr30est != 99) %>% 
+  mutate(mr30est = recode(mr30est, `91` = 0, `93` = 0))
+```
+
+## 
+
+```{r}
+graph_boxplot %>% 
+  filter(mr30est != 0) %>% 
+  mutate(
+    age_cat = ifelse(age2 == 1 | age2 == 2 | age2 == 3 | age2 == 4, "12 - 15",
+                     ifelse(age2 == 5 | age2 == 6 | age2 == 7 | age2 == 8, "16 - 19",
+                            ifelse(age2 == 9 | age2 == 10 | age2 == 11 | age2 == 12, "20 - 25",
+                                   ifelse(age2 == 13, "26 - 29", 
+                                          ifelse(age2 == 14, "30 - 34", 
+                                                 ifelse(age2 == 15, "35 - 49", 
+                                                        ifelse(age2 == 16, "50 - 64", "older_than_65" )))))))) %>% 
+  ggplot(aes(x = age_cat, y = mr30est)) +
+  geom_violin(aes(fill = age_cat), alpha = .5)
+  
+  #ggplot(aes(x = age_cat , y = mr30est)) + geom_boxplot()
+  
+ # ggplot(aes(x = mr30est, y = age_cat)) +
+ #  geom_density_ridges(scale = 0.85)
+  
+  
+```
+
