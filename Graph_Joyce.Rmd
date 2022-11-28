@@ -1,0 +1,77 @@
+---
+title: "Graph_Joyce"
+author: "Qiaoyi Xu"
+date: "2022-11-27"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r, load data}
+info_scatter = read_csv("data/nsduh_19.csv")
+
+info_scatter
+```
+
+
+
+```{r, scatter plot}
+info_scatterplot = info_scatter %>%
+  filter(irmjage!=991)%>%
+  group_by(irmjage) %>%
+  summarise(number_people = n()) %>%
+  ggplot(aes (x = irmjage, y = number_people)) +
+  geom_point() +
+  labs(x = "Age of first used marijuana", y = "Frequency(number of people)",
+       title = "Age When First Used MARIJUANA/HASHISH vs frequency(excluded never use)")
+  
+
+info_scatterplot                                 
+      
+```
+
+```{r}
+info_scatterplot_addneveruse = info_scatter %>%
+  mutate(irmjage = as.character(irmjage),
+         irmjage = recode(irmjage, "991" = "0"), #0 = "Never Use"
+         irmjage = as.numeric(irmjage))%>%
+  group_by(irmjage) %>%
+  summarise(number_people = n()) %>%
+  ggplot(aes (x = irmjage, y = number_people)) +
+  geom_point() +
+  theme_grey() +
+  labs(x = "Age of first used marijuana", y = "Frequency(number of people)",
+       title = "Age When First Used MARIJUANA/HASHISH vs frequency(included never use)")
+  
+
+info_scatterplot_addneveruse  
+```
+
+
+
+
+
+
+
+
+
+
+not useful code, prepare for future use if need:
+
+  mutate(firstuse_age = if_else(irmjage<12, "Under 12",
+                                   if_else(irmjage>=12&irmjage<=18, "12-18",
+                                   if_else(irmjage>=19&irmjage<=25, "19-25", 
+                                   if_else(irmjage>=26&irmjage<=30, "26-30",
+                                   if_else(irmjage>=31&irmjage<=40, "31-40",
+                                   if_else(irmjage>=41&irmjage<=50, "41-50",
+                                   if_else(irmjage>=51&irmjage<=60, "51-60", 
+                                   if_else(irmjage>60&irmjage<=82, "above 60", 
+                                   if_else(irmjage == 991, "Never Use", NA_character_))))))))))
+                                   
+
