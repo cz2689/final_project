@@ -1,0 +1,14 @@
+name: "Yay internet!"
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "Resume"
+      href: resume.html
+    - icon: fa-envelope fa-lg
+      href: mailto:<>
+    - icon: fa-github fa-lg
+      href: https://github.com/cz2689/final_project
+output:
+  html_document:
+    theme: cosmo

@@ -1,5 +1,5 @@
 ---
-title: "My awesome website"
+title: "Statistical Analysis"
 output: 
   html_document:
     toc: true
@@ -7,6 +7,9 @@ output:
     theme: cerulean
 ---
 
-# This is Jeff's awesome website
+# Part 1
+```{r}
 
-![](https://media.giphy.com/media/drXGoW1iudhKw/giphy.gif)
+```
+
+
