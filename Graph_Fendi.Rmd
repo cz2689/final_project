@@ -20,7 +20,7 @@ library(ggridges)
 #  PUF2019_100920 %>% 
 #  janitor::clean_names() %>% 
 #  select(questid2, age2, mr30est, catag6, newrace2, irmjage, mjrec, mrjmon, 
-#         ymdelt, amdelt, irsex, eduhighcat, income, irmarit)
+#         ymdelt, amdelt, irsex, eduhighcat, income, irmarit, coutyp4)
 
 #write_csv(nsduh_19, file = "data/nsduh_19.csv")
 ```

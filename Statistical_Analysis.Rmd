@@ -6,10 +6,13 @@ output:
     toc_float: true
     theme: cerulean
 ---
+```{r}
+library(tidyverse)
+```
 
 # Part 1
 ```{r}
-
+data = read_csv("./data/nsduh_19.csv")
 ```
 
 
