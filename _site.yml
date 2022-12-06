@@ -3,10 +3,16 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "Resume"
+    - text: "Descriptive Info"
       href: resume.html
-    - icon: fa-envelope fa-lg
-      href: mailto:<>
+    - text: "Mapping"
+      href: resume.html
+    - text: "Statistical Analysis"
+      href: resume.html
+    - text: "Project Report"
+      href: resume.html
+    - text: "References"
+      href: resume.html
     - icon: fa-github fa-lg
       href: https://github.com/cz2689/final_project
 output:

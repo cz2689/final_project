@@ -9,10 +9,10 @@ Tianyou Wang
 nsduh_df = read_csv("data/nsduh_19.csv")
 ```
 
-    ## Rows: 56136 Columns: 14
+    ## Rows: 56136 Columns: 15
     ## ── Column specification ────────────────────────────────────────────────────────
     ## Delimiter: ","
-    ## dbl (14): questid2, age2, mr30est, catag6, newrace2, irmjage, mjrec, mrjmon,...
+    ## dbl (15): questid2, age2, mr30est, catag6, newrace2, irmjage, mjrec, mrjmon,...
     ## 
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
