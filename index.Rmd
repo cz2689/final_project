@@ -7,5 +7,41 @@ output:
     theme: cerulean
 ---
 
-# Homepage.
+![](https://honestmarijuana.com/wp-content/uploads/2015/12/Marijuana-And-Depression_4.jpg)
+
+# Introduction 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Video: script cast
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Collaborators
+Fengdi Zhang (fz2328) : https://github.com/fz2328       
+Tianyou Wang (tw2838) : https://github.com/AliceWTY     
+Qiaoyi Xu (qx2222) : https://github.com/qiaoyixu    
+Chaoqun Zhou (cz2689) : https://github.com/cz2689       
 
