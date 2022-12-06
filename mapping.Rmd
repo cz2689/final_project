@@ -14,3 +14,16 @@ library(tidyverse)
 ```
 
 
+```{r}
+legal_state = read_csv("data/legalization_state.csv") 
+
+legal_state = legal_state %>% 
+  mutate(status = case_when(
+    Recreational == "Yes" | Medical == "Yes" ~ "Full legal",
+    Recreational == "No" | Medical == "Yes" ~ "Med legal",
+    Recreational == "No" | Medical == "No" ~ "Unlegal"
+  ))
+
+legal_state
+```
+
