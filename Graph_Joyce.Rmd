@@ -55,6 +55,7 @@ info_scatterplot_addneveruse
 
 
 
+From this plot, we could conclude that most people who used Marijuan strarted bwtween 10 and 30 years old when first used marijuana. So, it is necessary to focus on youth population. 
 
 
 
@@ -62,6 +63,9 @@ info_scatterplot_addneveruse
 
 
 
+
+
+=============================================================================================================================  
 not useful code, prepare for future use if need:
 
   mutate(firstuse_age = if_else(irmjage<12, "Under 12",
@@ -74,4 +78,9 @@ not useful code, prepare for future use if need:
                                    if_else(irmjage>60&irmjage<=82, "above 60", 
                                    if_else(irmjage == 991, "Never Use", NA_character_))))))))))
                                    
+
+
+
+
+
 
