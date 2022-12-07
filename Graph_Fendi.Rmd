@@ -51,10 +51,10 @@ graph_fendi =
                             ifelse(mr30est == 6, 30, 0)))))),
     use30 = ifelse( mr30est == 1 | mr30est == 2 | mr30est == 3 |
                       mr30est == 4 | mr30est == 5 | mr30est == 6, 1, 0),
-    youth_dpr = ifelse(ymdelt == 1, 1 ,
-                       ifelse(ymdelt == 2, 0, NA)),
-    adult_dpr = ifelse(amdelt == 1, 1 ,
-                       ifelse(amdelt == 2, 0, NA))
+    youth_dpr = ifelse(ymdeyr == 1, 1 ,
+                       ifelse(ymdeyr == 2, 0, NA)),
+    adult_dpr = ifelse(amdeyr == 1, 1 ,
+                       ifelse(amdeyr == 2, 0, NA))
     )  
 
 
