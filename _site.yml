@@ -6,13 +6,13 @@ navbar:
     - text: "Descriptive Info"
       href: Descriptive_Info.html
     - text: "Mapping"
-      href: resume.html
+      href: mapping.html
     - text: "Statistical Analysis"
       href: statistical_Analysis.html
     - text: "Project Report"
-      href: resume.html
+      href: report.html
     - text: "References"
-      href: resume.html
+      href: references.html
     - icon: fa-github fa-lg
       href: https://github.com/cz2689/final_project
 output:

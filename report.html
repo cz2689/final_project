@@ -11,7 +11,7 @@
 
 
 
-<title>Statistical Analysis</title>
+<title>Project Report</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -372,163 +372,12 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Statistical Analysis</h1>
+<h1 class="title toc-ignore">Project Report</h1>
 
 </div>
 
 
-<div id="logistic-regression-youths-12---17-years-old"
-class="section level1">
-<h1>Logistic regression — Youths (12 - 17 years old)</h1>
-<p>We perform a logistic regression on our outcome and exposure on
-youths while adjusting for other covariates.<br />
-ymdeyr (youth depression) = mrjmon (Past month marijuana Use) + catag6
-(age) + irsex (sex) + newrace2 (race) + coutyp4 (region)<br />
-And the resulting odds ratio is shown below:</p>
-<pre class="r"><code>reg %&gt;% 
-  glm(ymdeyr ~ mrjmon + catag6 + irsex + newrace2 + coutyp4, data = ., family = binomial()) %&gt;% 
-  broom::tidy() %&gt;% 
-  mutate(OR = exp(estimate),
-         conf.low = exp((estimate - 1.96 * std.error)),
-         conf.high = exp((estimate + 1.96 * std.error))
-         ) %&gt;%
-  filter(term == &quot;mrjmon1&quot;) %&gt;% 
-  select(term, OR, conf.low, conf.high) %&gt;% 
-  knitr::kable(digits = 3)</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">OR</th>
-<th align="right">conf.low</th>
-<th align="right">conf.high</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">mrjmon1</td>
-<td align="right">2.673</td>
-<td align="right">2.309</td>
-<td align="right">3.093</td>
-</tr>
-</tbody>
-</table>
-<p>The odds of depression is 2.673 (95% CI: 2.309 - 3.093) comparing
-youth who used cannabis in the past month to those who do not adjusting
-for age, sex, race, region.</p>
-</div>
-<div id="hypothesis-testing-youths-12---17-years-old"
-class="section level1">
-<h1>Hypothesis testing — Youths (12 - 17 years old)</h1>
-<p>Is the beta for our exposure variable truly different from
-zero?<br />
-We obtained the p.value from the t.test statistics.</p>
-<pre class="r"><code>reg %&gt;% 
-  glm(ymdeyr ~ mrjmon + catag6 + irsex + newrace2 + coutyp4, data = ., family = binomial()) %&gt;% 
-  broom::tidy() %&gt;% 
-  filter(term == &quot;mrjmon1&quot;) %&gt;% 
-  select(term, statistic, p.value) %&gt;% 
-  knitr::kable(digits = 4)</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">mrjmon1</td>
-<td align="right">13.1759</td>
-<td align="right">0</td>
-</tr>
-</tbody>
-</table>
-<p>As we can see that the t-tests statistic for the term
-<code>mrjmon1</code> which is marijuana past month use comparing Yes to
-No is very large and the resulting p.value is close to zero. Our beta
-coefficient of the exposure variable is significant.</p>
-</div>
-<div id="logistic-regression-adults-18-years-old"
-class="section level1">
-<h1>Logistic regression — Adults (18 + years old)</h1>
-<p>We perform a logistic regression on our outcome and exposure on
-adults while adjusting for other covariates.<br />
-amdeyr (adult depression) = mrjmon (Past month marijuana Use) + catag6
-(age) + irsex (sex) + newrace2 (race) + eduhighcat (education) + coutyp4
-(region) + income (income) + irmarit (martial status)<br />
-And the resulting odds ratio is shown below:</p>
-<pre class="r"><code>reg %&gt;% 
-  glm(amdeyr ~ mrjmon + catag6 + irsex + newrace2 + eduhighcat + coutyp4 + income + irmarit, data = ., family = binomial()) %&gt;% 
-  broom::tidy() %&gt;% 
-  mutate(OR = exp(estimate),
-         conf.low = exp((estimate - 1.96 * std.error)),
-         conf.high = exp((estimate + 1.96 * std.error))
-         ) %&gt;%
-  filter(term == &quot;mrjmon1&quot;) %&gt;% 
-  select(term, OR, conf.low, conf.high) %&gt;% 
-  knitr::kable(digits = 3)</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">OR</th>
-<th align="right">conf.low</th>
-<th align="right">conf.high</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">mrjmon1</td>
-<td align="right">1.935</td>
-<td align="right">1.795</td>
-<td align="right">2.086</td>
-</tr>
-</tbody>
-</table>
-<p>The odds of depression is 1.935 (95% CI: 1.795 - 2.086) comparing
-adults who used cannabis in the past month to those who do not adjusting
-for age, sex, race, education, region, income, and martial status.</p>
-</div>
-<div id="hypothesis-testing-adults-18-years-old" class="section level1">
-<h1>Hypothesis testing — Adults (18 + years old)</h1>
-<p>Is the beta for our exposure variable truly different from
-zero?<br />
-We obtained the p.value from the t.test statistics.</p>
-<pre class="r"><code>reg %&gt;% 
-  glm(amdeyr ~ mrjmon + catag6 + irsex + newrace2 + eduhighcat + coutyp4 + income + irmarit, data = ., family = binomial()) %&gt;% 
-  broom::tidy() %&gt;% 
-  filter(term == &quot;mrjmon1&quot;) %&gt;% 
-  select(term, statistic, p.value) %&gt;% 
-  knitr::kable(digits = 4)</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">mrjmon1</td>
-<td align="right">17.2173</td>
-<td align="right">0</td>
-</tr>
-</tbody>
-</table>
-<p>As we can see that the t-tests statistic for the term
-<code>mrjmon1</code> which is marijuana past month use comparing Yes to
-No is very large and the resulting p.value is close to zero. Our beta
-coefficient of the exposure variable is significant.</p>
-<p>reg %&gt;% mutate(coutyp4 = as.character(coutyp4), coutyp4 =
-recode(coutyp4, “1” = “Large Metro”, “2” = “Small Metro”, “3” =
-“Nonmetro”), coutyp4 = fct_relevel(coutyp4, “Large Metro”, “Small
-Metro”, “Nonmetro”)) %&gt;% group_by(coutyp4) %&gt;% summarise( youth =
-round(sum(youth_dpr, na.rm=TRUE)/n()<em>100, 2), adult =
-round(sum(adult_dpr, na.rm=TRUE)/n()</em>100, 2))</p>
-</div>
+
 
 
 

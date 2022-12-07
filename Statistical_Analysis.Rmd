@@ -14,15 +14,12 @@ library(tidyverse)
 ```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
 data = read_csv("./data/nsduh_19.csv")
 reg = data %>% 
-  mutate(
-    ymdelt = replace_na(ymdelt, 0),
-         amdelt = replace_na(amdelt, 0),
-         drp = ymdelt + amdelt,
+  mutate(amdeyr = as.factor(amdeyr),
+         amdeyr = fct_relevel(amdeyr, "2"),
+         ymdeyr = as.factor(ymdeyr),
+         ymdeyr = fct_relevel(ymdeyr, "2"),
          mrjmon = as.factor(mrjmon),
          mrjmon = fct_relevel(mrjmon, "0"),
-         drp = na_if(drp, 0),
-         drp = as.factor(drp),
-         drp = fct_relevel(drp, "2"),
          irsex = as.factor(irsex),
          newrace2 = as.factor(newrace2),
          eduhighcat = as.factor(eduhighcat),
@@ -32,13 +29,13 @@ reg = data %>%
          )
 ```
 
-# Logistic regression
-We perform a logistic regression on our outcome and exposure while adjusting for other covariates.  
-Drp (depression) = mrjmon (Past month marijuana Use) + catag6 (age) + irsex (sex) + newrace2 (race)  + eduhighcat (education) + coutyp4 (region) + income (income) + irmarit (martial status)  
+# Logistic regression --- Youths (12 - 17 years old)
+We perform a logistic regression on our outcome and exposure on youths while adjusting for other covariates.  
+ymdeyr (youth depression) = mrjmon (Past month marijuana Use) + catag6 (age) + irsex (sex) + newrace2 (race) + coutyp4 (region)  
 And the resulting odds ratio is shown below:
 ```{r}
 reg %>% 
-  glm(drp ~ mrjmon + catag6 + irsex + newrace2 + eduhighcat + coutyp4 + income + irmarit, data = ., family = binomial()) %>% 
+  glm(ymdeyr ~ mrjmon + catag6 + irsex + newrace2 + coutyp4, data = ., family = binomial()) %>% 
   broom::tidy() %>% 
   mutate(OR = exp(estimate),
          conf.low = exp((estimate - 1.96 * std.error)),
@@ -48,15 +45,15 @@ reg %>%
   select(term, OR, conf.low, conf.high) %>% 
   knitr::kable(digits = 3)
 ```
-The odds of depression is 1.901 (95% CI: 1.794 - 2.015) comparing people who used cannabis in the past month to those who do not adjusting for age, sex, race, education, region, income, and martial status. 
+The odds of depression is 2.673 (95% CI: 2.309 - 3.093) comparing youth who used cannabis in the past month to those who do not adjusting for age, sex, race, region. 
 
 
-# Hypothesis testing 
+# Hypothesis testing --- Youths (12 - 17 years old)
 Is the beta for our exposure variable truly different from zero?  
 We obtained the p.value from the t.test statistics.
 ```{r}
 reg %>% 
-  glm(drp ~ mrjmon + catag6 + irsex + newrace2 + eduhighcat + coutyp4 + income + irmarit, data = ., family = binomial()) %>% 
+  glm(ymdeyr ~ mrjmon + catag6 + irsex + newrace2 + coutyp4, data = ., family = binomial()) %>% 
   broom::tidy() %>% 
   filter(term == "mrjmon1") %>% 
   select(term, statistic, p.value) %>% 
@@ -64,7 +61,53 @@ reg %>%
 ```
 As we can see that the t-tests statistic for the term `mrjmon1` which is marijuana past month use comparing Yes to No is very large and the resulting p.value is close to zero. Our beta coefficient of the exposure variable is significant. 
 
+
+# Logistic regression --- Adults (18 + years old)
+We perform a logistic regression on our outcome and exposure on adults while adjusting for other covariates.  
+amdeyr (adult depression) = mrjmon (Past month marijuana Use) + catag6 (age) + irsex (sex) + newrace2 (race)  + eduhighcat (education) + coutyp4 (region) + income (income) + irmarit (martial status)  
+And the resulting odds ratio is shown below:
 ```{r}
+reg %>% 
+  glm(amdeyr ~ mrjmon + catag6 + irsex + newrace2 + eduhighcat + coutyp4 + income + irmarit, data = ., family = binomial()) %>% 
+  broom::tidy() %>% 
+  mutate(OR = exp(estimate),
+         conf.low = exp((estimate - 1.96 * std.error)),
+         conf.high = exp((estimate + 1.96 * std.error))
+         ) %>%
+  filter(term == "mrjmon1") %>% 
+  select(term, OR, conf.low, conf.high) %>% 
+  knitr::kable(digits = 3)
+```
+The odds of depression is 1.935 (95% CI: 1.795 - 2.086) comparing adults who used cannabis in the past month to those who do not adjusting for age, sex, race, education, region, income, and martial status. 
+
+
+# Hypothesis testing --- Adults (18 + years old)
+Is the beta for our exposure variable truly different from zero?  
+We obtained the p.value from the t.test statistics.
+```{r}
+reg %>% 
+  glm(amdeyr ~ mrjmon + catag6 + irsex + newrace2 + eduhighcat + coutyp4 + income + irmarit, data = ., family = binomial()) %>% 
+  broom::tidy() %>% 
+  filter(term == "mrjmon1") %>% 
+  select(term, statistic, p.value) %>% 
+  knitr::kable(digits = 4)
+```
+As we can see that the t-tests statistic for the term `mrjmon1` which is marijuana past month use comparing Yes to No is very large and the resulting p.value is close to zero. Our beta coefficient of the exposure variable is significant. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 reg %>% 
 mutate(coutyp4 = as.character(coutyp4),
     coutyp4 = recode(coutyp4, 
@@ -73,7 +116,21 @@ mutate(coutyp4 = as.character(coutyp4),
   group_by(coutyp4) %>% 
     summarise( youth = round(sum(youth_dpr, na.rm=TRUE)/n()*100, 2),
                adult = round(sum(adult_dpr, na.rm=TRUE)/n()*100, 2))
-```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
