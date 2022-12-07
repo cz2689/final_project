@@ -8,7 +8,7 @@ navbar:
     - text: "Mapping"
       href: mapping.html
     - text: "Statistical Analysis"
-      href: statistical_Analysis.html
+      href: Statistical_Analysis.html
     - text: "Project Report"
       href: report.html
     - text: "References"
