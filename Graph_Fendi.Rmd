@@ -48,7 +48,10 @@ graph_fendi =
                    ifelse(mr30est == 3, runif(1, min = 6, max = 9),
                       ifelse(mr30est == 4, runif(1, min = 10, max = 19),
                          ifelse(mr30est == 5, runif(1, min = 20, max = 29),
-                            ifelse(mr30est == 6, 30, 0)))))))
+                            ifelse(mr30est == 6, 30, 0)))))),
+    use30 = ifelse( mr30est == 1 | mr30est == 2 | mr30est == 3 |
+                      mr30est == 4 | mr30est == 5 | mr30est == 6, 1, 0)
+    )
 
 
 ```
@@ -73,10 +76,34 @@ graph_fendi %>%
     geom_boxplot(aes(fill = age_cat), alpha = .5) +
   labs(title = "Number of Days Used Marijuana in Past 30 Days", 
        x = "Age(years)", y = "Number of Days") +
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_minimal()
 
   
   
 ```
 
 This graph shows the distribution of the numbers of days used marijuana in past 30 days of each individual. Those aged between 16 and 25 years had the widest range, while people who aged between 26 and 29 years had the highest mean for number of days used marijuana in past 30 days.  
+
+
+
+
+Now, let's take a look at the marijuana use pattern in the past 30 days of the survey in different types of metro areas. 
+```{r}
+graph_fendi %>% 
+  mutate(coutyp4 = as.character(coutyp4),
+    coutyp4 = recode(coutyp4, 
+                     "1" = "Large Metro", "2" = "Small Metro", "3" = "Nonmetro"),
+    coutyp4 = fct_relevel(coutyp4, "Large Metro", "Small Metro", "Nonmetro")) %>% 
+  group_by(coutyp4) %>% 
+    summarise( used30_percent = round(sum(use30)/n()*100, 2)) %>% 
+    ggplot(aes(x = coutyp4, y = used30_percent)) +
+    geom_bar(stat = "identity", width = 0.5, fill = "steelblue") +
+  geom_text(aes(label = used30_percent), vjust = 1.6, color = "white", size = 3.5) +
+  labs(title = "Percentage of Individuals Used Marijuana in Past 30 Days By Metro Area", 
+       x = "Metro Area", y = "Percentage(%)") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_minimal()
+```
+
+We can see that the marijuana use patterns in the past 30 days did not vary much across different metro areas. Slightly more individuals from the "large Metro" area (0.17%) used marijuana in the past 30 days of the survey than the other two types of metro areas. 
