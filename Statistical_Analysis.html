@@ -33,6 +33,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -228,6 +229,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -358,6 +362,14 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Statistical Analysis</h1>
@@ -365,38 +377,14 @@ div.tocify {
 </div>
 
 
-<pre class="r"><code>library(tidyverse)</code></pre>
-<div id="tidy" class="section level1">
-<h1>Tidy</h1>
-<pre class="r"><code>data = read_csv(&quot;./data/nsduh_19.csv&quot;)</code></pre>
-<pre><code>## Rows: 56136 Columns: 15
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## dbl (15): questid2, age2, mr30est, catag6, newrace2, irmjage, mjrec, mrjmon,...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>reg = data %&gt;% 
-  mutate(
-    ymdelt = replace_na(ymdelt, 0),
-         amdelt = replace_na(amdelt, 0),
-         drp = ymdelt + amdelt,
-         mrjmon = as.factor(mrjmon),
-         mrjmon = fct_relevel(mrjmon, &quot;0&quot;),
-         drp = na_if(drp, 0),
-         drp = as.factor(drp),
-         drp = fct_relevel(drp, &quot;2&quot;),
-         irsex = as.factor(irsex),
-         newrace2 = as.factor(newrace2),
-         eduhighcat = as.factor(eduhighcat),
-         coutyp4 = as.factor(coutyp4),
-         income = as.factor(income),
-         irmarit = as.factor(irmarit)
-         )</code></pre>
-<p>drp 0 1 (yes) 2 (no) now two levels MRJMON 0 No 1 Yes</p>
-</div>
 <div id="logistic-regression" class="section level1">
 <h1>Logistic regression</h1>
+<p>We perform a logistic regression on our outcome and exposure while
+adjusting for other covariates.<br />
+Drp (depression) = mrjmon (Past month marijuana Use) + catag6 (age) +
+irsex (sex) + newrace2 (race) + eduhighcat (education) + coutyp4
+(region) + income (income) + irmarit (martial status)<br />
+And the resulting odds ratio is shown below:</p>
 <pre class="r"><code>reg %&gt;% 
   glm(drp ~ mrjmon + catag6 + irsex + newrace2 + eduhighcat + coutyp4 + income + irmarit, data = ., family = binomial()) %&gt;% 
   broom::tidy() %&gt;% 
@@ -428,7 +416,38 @@ div.tocify {
 <p>The odds of depression is 1.901 (95% CI: 1.794 - 2.015) comparing
 people who used cannabis in the past month to those who do not adjusting
 for age, sex, race, education, region, income, and martial status.</p>
-<p>I am not sure which outcome I regess on, need to check using SAS.</p>
+</div>
+<div id="hypothesis-testing" class="section level1">
+<h1>Hypothesis testing</h1>
+<p>Is the beta for our exposure variable truely different from
+zero?<br />
+We obtained the p.value from the t.test statistics.</p>
+<pre class="r"><code>reg %&gt;% 
+  glm(drp ~ mrjmon + catag6 + irsex + newrace2 + eduhighcat + coutyp4 + income + irmarit, data = ., family = binomial()) %&gt;% 
+  broom::tidy() %&gt;% 
+  filter(term == &quot;mrjmon1&quot;) %&gt;% 
+  select(term, statistic, p.value) %&gt;% 
+  knitr::kable(digits = 4)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">mrjmon1</td>
+<td align="right">21.5953</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>As we can see that the t-tests statistic for the term
+<code>mrjmon1</code> which is marijuana past month use comparing Yes to
+No is very large and the resulting p.value is close to zero. Our beta
+coefficient of the exposure variable is significant.</p>
 <p>Can we use covairates to predict drp? Maybe do a Cross-Validation</p>
 <p>hypothesise test?</p>
 <p>Region (coutyp4) distribution of cannabis smoking and drp</p>
@@ -469,6 +488,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {
