@@ -50,8 +50,13 @@ graph_fendi =
                          ifelse(mr30est == 5, runif(1, min = 20, max = 29),
                             ifelse(mr30est == 6, 30, 0)))))),
     use30 = ifelse( mr30est == 1 | mr30est == 2 | mr30est == 3 |
-                      mr30est == 4 | mr30est == 5 | mr30est == 6, 1, 0)
-    )
+                      mr30est == 4 | mr30est == 5 | mr30est == 6, 1, 0),
+    youth_dpr = ifelse(ymdelt == 1, 1 ,
+                       ifelse(ymdelt == 2, 0, NA)),
+    adult_dpr = ifelse(amdelt == 1, 1 ,
+                       ifelse(amdelt == 2, 0, NA))
+    )  
+
 
 
 ```
@@ -107,3 +112,30 @@ graph_fendi %>%
 ```
 
 We can see that the marijuana use patterns in the past 30 days did not vary much across different metro areas. Slightly more individuals from the "large Metro" area (0.17%) used marijuana in the past 30 days of the survey than the other two types of metro areas. 
+
+
+
+
+```{r}
+graph_fendi %>% 
+  mutate(coutyp4 = as.character(coutyp4),
+    coutyp4 = recode(coutyp4, 
+                     "1" = "Large Metro", "2" = "Small Metro", "3" = "Nonmetro"),
+    coutyp4 = fct_relevel(coutyp4, "Large Metro", "Small Metro", "Nonmetro")) %>% 
+  group_by(coutyp4) %>% 
+    summarise( youth = round(sum(youth_dpr, na.rm=TRUE)/n()*100, 2),
+               adult = round(sum(adult_dpr, na.rm=TRUE)/n()*100, 2)) %>% 
+  pivot_longer(
+    youth:adult,
+    names_to = "age_group",
+    values_to = "dpr_percent"
+  ) %>% 
+  ggplot(aes(x = coutyp4, y = dpr_percent, fill = age_group)) +
+    geom_bar(stat = "identity", width = 0.5, position = "dodge") + 
+    labs(title = "Percentage of Individuals Having Depression By Metro Area",
+         x = "Metro Area", y = "Percentage(%)") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    theme_minimal()
+
+
+```
