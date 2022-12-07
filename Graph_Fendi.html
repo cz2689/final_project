@@ -332,7 +332,10 @@ graph_fendi =
                    ifelse(mr30est == 3, runif(1, min = 6, max = 9),
                       ifelse(mr30est == 4, runif(1, min = 10, max = 19),
                          ifelse(mr30est == 5, runif(1, min = 20, max = 29),
-                            ifelse(mr30est == 6, 30, 0)))))))</code></pre>
+                            ifelse(mr30est == 6, 30, 0)))))),
+    use30 = ifelse( mr30est == 1 | mr30est == 2 | mr30est == 3 |
+                      mr30est == 4 | mr30est == 5 | mr30est == 6, 1, 0)
+    )</code></pre>
 <p>Let’s expore the marijuana use pattern in the past 30 days of the
 survey.</p>
 <pre class="r"><code>  graph_fendi %&gt;% 
@@ -349,19 +352,19 @@ survey.</p>
 <tbody>
 <tr class="odd">
 <td align="left">12 - 15</td>
-<td align="right">113.507</td>
+<td align="right">115.612</td>
 </tr>
 <tr class="even">
 <td align="left">16 - 19</td>
-<td align="right">500.609</td>
+<td align="right">502.540</td>
 </tr>
 <tr class="odd">
 <td align="left">20 - 25</td>
-<td align="right">294.958</td>
+<td align="right">294.569</td>
 </tr>
 <tr class="even">
 <td align="left">26 - 29</td>
-<td align="right">46.577</td>
+<td align="right">48.015</td>
 </tr>
 <tr class="odd">
 <td align="left">30 - 34</td>
@@ -369,11 +372,11 @@ survey.</p>
 </tr>
 <tr class="even">
 <td align="left">35 - 49</td>
-<td align="right">73.937</td>
+<td align="right">76.318</td>
 </tr>
 <tr class="odd">
 <td align="left">50 - 64</td>
-<td align="right">34.221</td>
+<td align="right">32.906</td>
 </tr>
 <tr class="even">
 <td align="left">older_than_65</td>
@@ -393,13 +396,35 @@ between 20 and 25 years.</p>
     geom_boxplot(aes(fill = age_cat), alpha = .5) +
   labs(title = &quot;Number of Days Used Marijuana in Past 30 Days&quot;, 
        x = &quot;Age(years)&quot;, y = &quot;Number of Days&quot;) +
-  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_minimal()</code></pre>
 <p><img src="Graph_Fendi_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>This graph shows the distribution of the numbers of days used
 marijuana in past 30 days of each individual. Those aged between 16 and
 25 years had the widest range, while people who aged between 26 and 29
 years had the highest mean for number of days used marijuana in past 30
 days.</p>
+<p>Now, let’s take a look at the marijuana use pattern in the past 30
+days of the survey in different types of metro areas.</p>
+<pre class="r"><code>graph_fendi %&gt;% 
+  mutate(coutyp4 = as.character(coutyp4),
+    coutyp4 = recode(coutyp4, 
+                     &quot;1&quot; = &quot;Large Metro&quot;, &quot;2&quot; = &quot;Small Metro&quot;, &quot;3&quot; = &quot;Nonmetro&quot;),
+    coutyp4 = fct_relevel(coutyp4, &quot;Large Metro&quot;, &quot;Small Metro&quot;, &quot;Nonmetro&quot;)) %&gt;% 
+  group_by(coutyp4) %&gt;% 
+    summarise( used30_percent = round(sum(use30)/n()*100, 2)) %&gt;% 
+    ggplot(aes(x = coutyp4, y = used30_percent)) +
+    geom_bar(stat = &quot;identity&quot;, width = 0.5, fill = &quot;steelblue&quot;) +
+  geom_text(aes(label = used30_percent), vjust = 1.6, color = &quot;white&quot;, size = 3.5) +
+  labs(title = &quot;Percentage of Individuals Used Marijuana in Past 30 Days By Metro Area&quot;, 
+       x = &quot;Metro Area&quot;, y = &quot;Percentage(%)&quot;) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_minimal()</code></pre>
+<p><img src="Graph_Fendi_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>We can see that the marijuana use patterns in the past 30 days did
+not vary much across different metro areas. Slightly more individuals
+from the “large Metro” area (0.17%) used marijuana in the past 30 days
+of the survey than the other two types of metro areas.</p>
 </div>
 
 
