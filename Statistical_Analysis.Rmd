@@ -8,7 +8,7 @@ output:
 ---
 ```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
 library(tidyverse)
-library(modelr)
+
 ```
 
 ```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
@@ -64,6 +64,16 @@ reg %>%
 ```
 As we can see that the t-tests statistic for the term `mrjmon1` which is marijuana past month use comparing Yes to No is very large and the resulting p.value is close to zero. Our beta coefficient of the exposure variable is significant. 
 
+```{r}
+reg %>% 
+mutate(coutyp4 = as.character(coutyp4),
+    coutyp4 = recode(coutyp4, 
+                     "1" = "Large Metro", "2" = "Small Metro", "3" = "Nonmetro"),
+    coutyp4 = fct_relevel(coutyp4, "Large Metro", "Small Metro", "Nonmetro")) %>% 
+  group_by(coutyp4) %>% 
+    summarise( youth = round(sum(youth_dpr, na.rm=TRUE)/n()*100, 2),
+               adult = round(sum(adult_dpr, na.rm=TRUE)/n()*100, 2))
+```
 
 
 
