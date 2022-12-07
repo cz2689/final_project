@@ -1,0 +1,131 @@
+---
+title: "About Marijuana Use In the United States"
+output: 
+  html_document:
+    html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(ggridges)
+```
+
+## Marijuana Use In The Past 30 Days
+
+```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
+raw_data = read_csv("data/nsduh_19.csv")
+
+graph_fendi = raw_data %>% 
+  filter(mr30est != 94 & mr30est != 97 & mr30est != 98 & mr30est != 99) %>% 
+  mutate(mr30est = recode(mr30est, `91` = 0, `93` = 0))
+
+graph_fendi =
+  graph_fendi %>% 
+  mutate(
+    age_cat = ifelse(age2 == 1 | age2 == 2 | age2 == 3 | age2 == 4, "12 - 15",
+                  ifelse(age2 == 5 | age2 == 6 | age2 == 7 | age2 == 8, "16 - 19",
+                      ifelse(age2 == 9 | age2 == 10 | age2 == 11 | age2 == 12, "20 - 25",
+                           ifelse(age2 == 13, "26 - 29", 
+                                ifelse(age2 == 14, "30 - 34", 
+                                   ifelse(age2 == 15, "35 - 49", 
+                                      ifelse(age2 == 16, "50 - 64", "older_than_65" )
+                                      )))))),
+    days30 = ifelse(mr30est == 1, runif(1, min = 1, max = 2),
+                ifelse(mr30est == 2, runif(1, min = 3, max = 5),
+                   ifelse(mr30est == 3, runif(1, min = 6, max = 9),
+                      ifelse(mr30est == 4, runif(1, min = 10, max = 19),
+                         ifelse(mr30est == 5, runif(1, min = 20, max = 29),
+                            ifelse(mr30est == 6, 30, 0)))))),
+    use30 = ifelse( mr30est == 1 | mr30est == 2 | mr30est == 3 |
+                      mr30est == 4 | mr30est == 5 | mr30est == 6, 1, 0)
+    )
+
+
+```
+
+
+First, let's explore the marijuana use pattern in the past 30 days of the survey in different age groups. 
+```{r}
+  graph_fendi %>% 
+    group_by(age_cat) %>% 
+    summarise(days = sum(days30)) %>% 
+    knitr::kable(digits = 3)
+```
+
+This table shows the cumulative numbers of days used marijuana in past 30 days in each age range. There were `r nrow(raw_data)` individuals participating the 2019 NSDUH survey. We can see that people who aged between 16 and 19 years accumulated the most number of days of marijuana using in the past 30 days of the survey, followed by those who aged between 20 and 25 years. 
+
+
+
+```{r}
+graph_fendi %>%
+    filter(days30 != 0) %>% 
+    ggplot(aes(x = age_cat, y = days30)) +
+    geom_boxplot(aes(fill = age_cat), alpha = .5) +
+  labs(title = "Number of Days Used Marijuana in Past 30 Days", 
+       x = "Age(years)", y = "Number of Days") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_minimal()
+
+  
+  
+```
+
+This graph shows the distribution of the numbers of days used marijuana in past 30 days of each individual. Those aged between 16 and 25 years had the widest range, while people who aged between 26 and 29 years had the highest mean for number of days used marijuana in past 30 days.  
+
+
+
+
+Now, let's take a look at the marijuana use pattern in the past 30 days of the survey in different types of metro areas. 
+```{r}
+graph_fendi %>% 
+  mutate(coutyp4 = as.character(coutyp4),
+    coutyp4 = recode(coutyp4, 
+                     "1" = "Large Metro", "2" = "Small Metro", "3" = "Nonmetro"),
+    coutyp4 = fct_relevel(coutyp4, "Large Metro", "Small Metro", "Nonmetro")) %>% 
+  group_by(coutyp4) %>% 
+    summarise( used30_percent = round(sum(use30)/n()*100, 2)) %>% 
+    ggplot(aes(x = coutyp4, y = used30_percent)) +
+    geom_bar(stat = "identity", width = 0.5, fill = "steelblue") +
+  geom_text(aes(label = used30_percent), vjust = 1.6, color = "white", size = 3.5) +
+  labs(title = "Percentage of Individuals Used Marijuana in Past 30 Days By Metro Area", 
+       x = "Metro Area", y = "Percentage(%)") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_minimal()
+```
+
+We can see that the marijuana use patterns in the past 30 days did not vary much across different metro areas. Slightly more individuals from the "large Metro" area (0.17%) used marijuana in the past 30 days of the survey than the other two types of metro areas. 
+
+## Age When People First Started Using Marijuana
+```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
+info_scatter = read_csv("data/nsduh_19.csv")
+```
+
+```{r, message=FALSE, warning=FALSE}
+info_scatterplot = info_scatter %>%
+  filter(irmjage != 991) %>%
+  group_by(irmjage) %>%
+  summarise(number_people = n()) %>%
+  ggplot(aes(x = irmjage, y = number_people)) +
+  geom_point() +
+  geom_smooth() +
+  labs(x = "Age of first used marijuana", y = "Frequency(number of people)",
+       title = "Age When First Used among people who used MARIJUANA/HASHISH") +
+  theme_minimal()
+  
+
+info_scatterplot   
+```
+
+In this part, we created a scatter plot to show the age when first used MARIJUANA/HASHISH and frequency of people in each year. We excluded people who never use MARIJUANA/HASHISH in this plot. Because, without doubts, most people never use MARIJUANA/HASHISH. In our dataset, there are 31340 people who never use MARIJUANA/HASHISH. Therefore, after excluding people who never use MARIJUANA/HASHISH, it is more clear to see the distribution of Age when First Used among people who used MARIJUANA/HASHISH.     
+
+
+From this plot, we could conclude that most people who used Marijuana started between 10 and 30 years old when first used marijuana. So, it is necessary to focus on youth population during our further steps. 
+
+
+
+
+

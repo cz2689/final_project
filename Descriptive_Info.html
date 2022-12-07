@@ -9,11 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Fengdi Zhang" />
 
-<meta name="date" content="2022-11-23" />
 
-<title>Graph</title>
+<title>About Marijuana Use In the United States</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -31,7 +29,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -227,7 +229,73 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
 
 
 
@@ -237,6 +305,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -284,60 +362,26 @@ $(document).ready(function () {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
-<h1 class="title toc-ignore">Graph</h1>
-<h4 class="author">Fengdi Zhang</h4>
-<h4 class="date">2022-11-23</h4>
+
+<h1 class="title toc-ignore">About Marijuana Use In the United
+States</h1>
 
 </div>
 
 
-<div id="load-and-cleaning-data" class="section level2">
-<h2>Load and Cleaning Data</h2>
-<pre class="r"><code>#load(&quot;data/NSDUH_2019.RData&quot;)
-
-#nsduh_19 = 
-#  PUF2019_100920 %&gt;% 
-#  janitor::clean_names() %&gt;% 
-#  select(questid2, age2, mr30est, catag6, newrace2, irmjage, mjrec, mrjmon, 
-#         ymdelt, amdelt, irsex, eduhighcat, income, irmarit, coutyp4)
-
-#write_csv(nsduh_19, file = &quot;data/nsduh_19.csv&quot;)</code></pre>
-<pre class="r"><code>raw_data = read_csv(&quot;data/nsduh_19.csv&quot;)</code></pre>
-<pre><code>## Rows: 56136 Columns: 15
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## dbl (15): questid2, age2, mr30est, catag6, newrace2, irmjage, mjrec, mrjmon,...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>graph_fendi = raw_data %&gt;% 
-  filter(mr30est != 94 &amp; mr30est != 97 &amp; mr30est != 98 &amp; mr30est != 99) %&gt;% 
-  mutate(mr30est = recode(mr30est, `91` = 0, `93` = 0))
-
-graph_fendi =
-  graph_fendi %&gt;% 
-  mutate(
-    age_cat = ifelse(age2 == 1 | age2 == 2 | age2 == 3 | age2 == 4, &quot;12 - 15&quot;,
-                  ifelse(age2 == 5 | age2 == 6 | age2 == 7 | age2 == 8, &quot;16 - 19&quot;,
-                      ifelse(age2 == 9 | age2 == 10 | age2 == 11 | age2 == 12, &quot;20 - 25&quot;,
-                           ifelse(age2 == 13, &quot;26 - 29&quot;, 
-                                ifelse(age2 == 14, &quot;30 - 34&quot;, 
-                                   ifelse(age2 == 15, &quot;35 - 49&quot;, 
-                                      ifelse(age2 == 16, &quot;50 - 64&quot;, &quot;older_than_65&quot; )
-                                      )))))),
-    days30 = ifelse(mr30est == 1, runif(1, min = 1, max = 2),
-                ifelse(mr30est == 2, runif(1, min = 3, max = 5),
-                   ifelse(mr30est == 3, runif(1, min = 6, max = 9),
-                      ifelse(mr30est == 4, runif(1, min = 10, max = 19),
-                         ifelse(mr30est == 5, runif(1, min = 20, max = 29),
-                            ifelse(mr30est == 6, 30, 0)))))),
-    use30 = ifelse( mr30est == 1 | mr30est == 2 | mr30est == 3 |
-                      mr30est == 4 | mr30est == 5 | mr30est == 6, 1, 0)
-    )</code></pre>
-<p>Let’s expore the marijuana use pattern in the past 30 days of the
-survey.</p>
+<div id="marijuana-use-in-the-past-30-days" class="section level2">
+<h2>Marijuana Use In The Past 30 Days</h2>
+<p>First, let’s explore the marijuana use pattern in the past 30 days of
+the survey in different age groups.</p>
 <pre class="r"><code>  graph_fendi %&gt;% 
     group_by(age_cat) %&gt;% 
     summarise(days = sum(days30)) %&gt;% 
@@ -352,19 +396,19 @@ survey.</p>
 <tbody>
 <tr class="odd">
 <td align="left">12 - 15</td>
-<td align="right">111.910</td>
+<td align="right">75.984</td>
 </tr>
 <tr class="even">
 <td align="left">16 - 19</td>
-<td align="right">496.730</td>
+<td align="right">435.233</td>
 </tr>
 <tr class="odd">
 <td align="left">20 - 25</td>
-<td align="right">291.193</td>
+<td align="right">259.535</td>
 </tr>
 <tr class="even">
 <td align="left">26 - 29</td>
-<td align="right">47.438</td>
+<td align="right">40.043</td>
 </tr>
 <tr class="odd">
 <td align="left">30 - 34</td>
@@ -372,11 +416,11 @@ survey.</p>
 </tr>
 <tr class="even">
 <td align="left">35 - 49</td>
-<td align="right">75.229</td>
+<td align="right">60.102</td>
 </tr>
 <tr class="odd">
 <td align="left">50 - 64</td>
-<td align="right">32.284</td>
+<td align="right">26.530</td>
 </tr>
 <tr class="even">
 <td align="left">older_than_65</td>
@@ -398,7 +442,7 @@ between 20 and 25 years.</p>
        x = &quot;Age(years)&quot;, y = &quot;Number of Days&quot;) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme_minimal()</code></pre>
-<p><img src="Graph_Fendi_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="Descriptive_Info_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>This graph shows the distribution of the numbers of days used
 marijuana in past 30 days of each individual. Those aged between 16 and
 25 years had the widest range, while people who aged between 26 and 29
@@ -420,15 +464,46 @@ days of the survey in different types of metro areas.</p>
        x = &quot;Metro Area&quot;, y = &quot;Percentage(%)&quot;) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme_minimal()</code></pre>
-<p><img src="Graph_Fendi_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="Descriptive_Info_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>We can see that the marijuana use patterns in the past 30 days did
 not vary much across different metro areas. Slightly more individuals
 from the “large Metro” area (0.17%) used marijuana in the past 30 days
 of the survey than the other two types of metro areas.</p>
 </div>
+<div id="age-when-people-first-started-using-marijuana"
+class="section level2">
+<h2>Age When People First Started Using Marijuana</h2>
+<pre class="r"><code>info_scatterplot = info_scatter %&gt;%
+  filter(irmjage != 991) %&gt;%
+  group_by(irmjage) %&gt;%
+  summarise(number_people = n()) %&gt;%
+  ggplot(aes(x = irmjage, y = number_people)) +
+  geom_point() +
+  geom_smooth() +
+  labs(x = &quot;Age of first used marijuana&quot;, y = &quot;Frequency(number of people)&quot;,
+       title = &quot;Age When First Used among people who used MARIJUANA/HASHISH&quot;) +
+  theme_minimal()
+  
+
+info_scatterplot   </code></pre>
+<p><img src="Descriptive_Info_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>In this part, we created a scatter plot to show the age when first
+used MARIJUANA/HASHISH and frequency of people in each year. We excluded
+people who never use MARIJUANA/HASHISH in this plot. Because, without
+doubts, most people never use MARIJUANA/HASHISH. In our dataset, there
+are 31340 people who never use MARIJUANA/HASHISH. Therefore, after
+excluding people who never use MARIJUANA/HASHISH, it is more clear to
+see the distribution of Age when First Used among people who used
+MARIJUANA/HASHISH.</p>
+<p>From this plot, we could conclude that most people who used Marijuana
+started between 10 and 30 years old when first used marijuana. So, it is
+necessary to focus on youth population during our further steps.</p>
+</div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -460,7 +535,41 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

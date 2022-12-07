@@ -4,7 +4,7 @@ navbar:
   title: "Home"
   right:
     - text: "Descriptive Info"
-      href: resume.html
+      href: Descriptive_Info.html
     - text: "Mapping"
       href: resume.html
     - text: "Statistical Analysis"

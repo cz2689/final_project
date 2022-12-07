@@ -47,14 +47,30 @@ info_scatterplot = info_scatter %>%
   summarise(number_people = n()) %>%
   ggplot(aes (x = irmjage, y = number_people)) +
   geom_point() +
+  geom_smooth() +
   labs(x = "Age of first used marijuana", y = "Frequency(number of people)",
-       title = "Age When First Used MARIJUANA/HASHISH vs frequency(excluded never use)")
+       title = "Age When First Used among people who used MARIJUANA/HASHISH")
   
 
 info_scatterplot                                 
 ```
 
+    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+
 ![](Graph_Joyce_files/figure-gfm/scatter%20plot-1.png)<!-- -->
+
+In this part, we created a scatter plot to show the age when first used
+MARIJUANA/HASHISH and frequency of people in each year. We excluded
+people who never use MARIJUANA/HASHISH in this plot. Because, without
+doubts, most people never use MARIJUANA/HASHISH. In our dataset, there
+are 31340 people who never use MARIJUANA/HASHISH. Therefore, after
+excluded poeple who never use MARIJUANA/HASHISH, it is more clear to see
+the distribution of Age when First Used among people who used
+MARIJUANA/HASHISH.
+
+From this plot, we could conclude that most people who used Marijuan
+strarted bwtween 10 and 30 years old when first used marijuana. So, it
+is necessary to focus on youth population during our further steps.
 
 ``` r
 info_scatterplot_addneveruse = info_scatter %>%
@@ -74,10 +90,6 @@ info_scatterplot_addneveruse
 ```
 
 ![](Graph_Joyce_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
-
-From this plot, we could conclude that most people who used Marijuan
-strarted bwtween 10 and 30 years old when first used marijuana. So, it
-is necessary to focus on youth population.
 
 =============================================================================================================================  
 not useful code, prepare for future use if need:
