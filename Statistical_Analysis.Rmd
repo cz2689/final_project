@@ -8,6 +8,7 @@ output:
 ---
 ```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
 library(tidyverse)
+library(modelr)
 ```
 
 ```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
@@ -51,7 +52,7 @@ The odds of depression is 1.901 (95% CI: 1.794 - 2.015) comparing people who use
 
 
 # Hypothesis testing 
-Is the beta for our exposure variable truely different from zero?  
+Is the beta for our exposure variable truly different from zero?  
 We obtained the p.value from the t.test statistics.
 ```{r}
 reg %>% 
@@ -63,20 +64,6 @@ reg %>%
 ```
 As we can see that the t-tests statistic for the term `mrjmon1` which is marijuana past month use comparing Yes to No is very large and the resulting p.value is close to zero. Our beta coefficient of the exposure variable is significant. 
 
-
-
-
-
-
-
-
-
-
-Can we use covairates to predict drp? Maybe do a Cross-Validation 
-
-hypothesise test?
-
-Region (coutyp4) distribution of cannabis smoking and drp
 
 
 
