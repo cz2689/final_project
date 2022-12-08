@@ -51,20 +51,16 @@ mapping_df <- mapping_df %>%
 labels = usmapdata::centroid_labels("states")
 state_labels <- merge(mapping_df, labels, by = "fips")
 
-map = plot_usmap(regions = "states", data=mapping_df, values = "status",color = "white", labels = TRUE)+ 
+map = plot_usmap(regions = "states", data=mapping_df, values = "status",color = "white", labels = TRUE)+
   theme(panel.background = element_rect(colour = "black")) +
   scale_fill_manual(values = c(`Recreational/Medical` = "red", `Medical` = "blue", `None` = "grey" ), name = "Legalized states") + 
   theme(legend.position = "bottom") +
   labs(title = "Where marijuana is legal in the United States")
 
 map$layers[[2]]$aes_params$size <- 3
-
-print(map)
-
-
 ```
 
-```{r}
+```{r, echo=FALSE,eval=FALSE}
 plot_usmap(regions = "states", data=mapping_df, values = "status")+ 
   ggrepel::geom_label_repel(data = labels,
              aes(x = x, y = y, label = abbr),
@@ -78,15 +74,39 @@ plot_usmap(regions = "states", data=mapping_df, values = "status")+
   labs(title = "Where marijuana is legal in the United States")
 ```
 
-```{r}
+```{r,echo=FALSE,eval=FALSE}
 ggplotly(map) %>%
-  highlight(
-    "plotly_hover",
-    selected = attrs_selected(line = list(color = "black"))
-) %>%
-  widgetframe::frameWidget()
-```
+  highlight("plotly_hover", selected = attrs_selected(line = list(color = "black"))) 
 
+
+
+library(plotly)
+mapping_df %>% plot_ly(
+    type = 'scatter',
+    mode = 'markers',
+    x = ~Year_legalized_REC,
+    y = ~Year_legalized_MED,
+    color = ~status,
+    text = ~full,
+    hovertemplate = paste(
+      "<b>%{text}</b><br><br>",
+      "%{yaxis.title.text}: %{y:$,.0f}<br>",
+      "%{xaxis.title.text}: %{x:.0%}<br>",
+      "Number Employed: %{marker.size:,}",
+      "<extra></extra>"
+      ))
+
+
+    
+fig
+```
+ df <- read.csv('https://raw.githubusercontent.com/plotly/datasets/master/job-automation-probability.csv')
+ 
+ https://plotly.com/r/hover-text-and-formatting/ 
+ 
+ 
+ 
+ 
 ```{r}
 legalized_table <- 
   legal_state%>% 
