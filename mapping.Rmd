@@ -12,6 +12,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(tidyverse)
 library(dplyr)
+library(usmap)
+library(ggplot2)
+require(maps)
 ```
 
 
@@ -19,31 +22,58 @@ library(dplyr)
 legal_state = read_csv("data/legalization_state.csv") 
 
 legal_state = legal_state %>% 
-  rename(region = State)
+  rename(full = State)
 
 legal_state = legal_state %>%
   mutate(status = case_when(
-    Recreational == "Yes" | Medical == "Yes" ~ 1, #full legal
-    Recreational == "No" | Medical == "Yes" ~ 2, #medical legal
-    Recreational == "No" | Medical == "No" ~ 3 #recreational legal
-  )) %>%
-  select(-Recreational, -Medical)
+    Recreational == "Yes" & Medical == "Yes" ~ "Recreational/Medical", #rec/med
+    Recreational == "No" & Medical == "Yes" ~ "Medical", #medical legal
+    Recreational == "No" & Medical == "No" ~ "None"#none
+  )) 
 
 legal_state
 ```
 
-```{r}
-MainStates <- map_data("state")
 
-StatePopulation <- read.csv("https://raw.githubusercontent.com/ds4stats/r-tutorials/master/intro-maps/data/StatePopulation.csv", as.is = TRUE)
+
+```{r}
+data(statepop)
+
+mapping_df <-inner_join(statepop, legal_state, by = "full")
+
+mapping_df <- mapping_df %>%
+  select(-pop_2015) %>%
+  mutate(status = factor(status))
+
+plot_usmap(regions = "states", data=mapping_df, values = "status",labels = TRUE)+ 
+  theme(panel.background = element_rect(colour = "black")) +
+  scale_fill_manual(values = c(`Recreational/Medical` = "red", `Medical` = "blue", `None` = "grey" ), name = "Legalized states") + 
+  theme(legend.position = "bottom", ) +
+  labs(title = "Where marijuana is legal in the United States")
+
 ```
 
+
 ```{r}
-based_map = ggplot() + 
+legalized_table <- 
+  legal_state%>% 
+  select(-Recreational, -Medical) %>% 
+  rename(c( "States" = "full",  "Recreational legalized year" = "Year_legalized_REC", "Medical legalized year" = "Year_legalized_MED", "Legalization" = "status")
+  ) %>% 
+  knitr::kable()
+```
+
+add population into the map:
+https://cran.r-project.org/web/packages/usmap/vignettes/advanced-mapping.html
+
+
+```{r, echo=FALSE, eval=FALSE}
+
+basic_map = ggplot() + 
   geom_polygon( data=MainStates, aes(x=long, y=lat, group=group),
                 color="black", fill="lightblue" )
 
-based_map
+basic_map
 ```
 
 
