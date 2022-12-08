@@ -24,7 +24,7 @@ info_scatter
 ```
 
     ## # A tibble: 56,136 × 15
-    ##    quest…¹  age2 mr30est catag6 newra…² irmjage mjrec mrjmon ymdelt amdelt irsex
+    ##    quest…¹  age2 mr30est catag6 newra…² irmjage mjrec mrjmon ymdeyr amdeyr irsex
     ##      <dbl> <dbl>   <dbl>  <dbl>   <dbl>   <dbl> <dbl>  <dbl>  <dbl>  <dbl> <dbl>
     ##  1  4.33e7    15      93      4       1      21     3      0     NA      1     1
     ##  2  6.51e7    17      91      6       5     991    91      0     NA      2     2
