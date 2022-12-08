@@ -1,5 +1,5 @@
 ---
-title: "mapping"
+title: "Mapping"
 author: "Qiaoyi Xu"
 date: "2022-12-06"
 output:  github_document
