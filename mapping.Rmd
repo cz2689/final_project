@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(tidyverse)
+library(dplyr)
 ```
 
 
@@ -18,12 +19,34 @@ library(tidyverse)
 legal_state = read_csv("data/legalization_state.csv") 
 
 legal_state = legal_state %>% 
+  rename(region = State)
+
+legal_state = legal_state %>%
   mutate(status = case_when(
-    Recreational == "Yes" | Medical == "Yes" ~ "Full legal",
-    Recreational == "No" | Medical == "Yes" ~ "Med legal",
-    Recreational == "No" | Medical == "No" ~ "Unlegal"
-  ))
+    Recreational == "Yes" | Medical == "Yes" ~ 1, #full legal
+    Recreational == "No" | Medical == "Yes" ~ 2, #medical legal
+    Recreational == "No" | Medical == "No" ~ 3 #recreational legal
+  )) %>%
+  select(-Recreational, -Medical)
 
 legal_state
 ```
+
+```{r}
+MainStates <- map_data("state")
+
+StatePopulation <- read.csv("https://raw.githubusercontent.com/ds4stats/r-tutorials/master/intro-maps/data/StatePopulation.csv", as.is = TRUE)
+```
+
+```{r}
+based_map = ggplot() + 
+  geom_polygon( data=MainStates, aes(x=long, y=lat, group=group),
+                color="black", fill="lightblue" )
+
+based_map
+```
+
+
+mapping_df <-inner_join(MainStates, legal_state, by = "region") #更改每个州名字的格式
+
 
