@@ -313,6 +313,7 @@ require(maps)</code></pre>
 ## The following object is masked from &#39;package:purrr&#39;:
 ## 
 ##     map</code></pre>
+<pre class="r"><code>library(ggrepel)</code></pre>
 <pre class="r"><code>legal_state = read_csv(&quot;data/legalization_state.csv&quot;) </code></pre>
 <pre><code>## Rows: 51 Columns: 5
 ## ── Column specification ────────────────────────────────────────────────────────
@@ -355,6 +356,9 @@ mapping_df &lt;- mapping_df %&gt;%
   select(-pop_2015) %&gt;%
   mutate(status = factor(status))
 
+labels = usmapdata::centroid_labels(&quot;states&quot;)
+state_labels &lt;- merge(mapping_df, labels, by = &quot;fips&quot;)
+
 plot_usmap(regions = &quot;states&quot;, data=mapping_df, values = &quot;status&quot;,labels = TRUE)+ 
   theme(panel.background = element_rect(colour = &quot;black&quot;)) +
   scale_fill_manual(values = c(`Recreational/Medical` = &quot;red&quot;, `Medical` = &quot;blue&quot;, `None` = &quot;grey&quot; ), name = &quot;Legalized states&quot;) + 
@@ -362,15 +366,357 @@ plot_usmap(regions = &quot;states&quot;, data=mapping_df, values = &quot;status&
   labs(title = &quot;Where marijuana is legal in the United States&quot;)</code></pre>
 <pre><code>## Warning: Ignoring unknown parameters: linewidth</code></pre>
 <p><img src="mapping_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>plot_usmap(regions = &quot;states&quot;, data=mapping_df, values = &quot;status&quot;)+ 
+  ggrepel::geom_label_repel(data = labels,
+             aes(x = x, y = y, label = abbr),
+             size = 3, alpha = 0.8,
+             label.r = unit(0.5, &quot;lines&quot;), label.size = 0.5,
+             segment.color = &quot;red&quot;, segment.size = 1,
+             seed = 1002) +
+  theme(panel.background = element_rect(colour = &quot;black&quot;)) +
+  scale_fill_manual(values = c(`Recreational/Medical` = &quot;red&quot;, `Medical` = &quot;blue&quot;, `None` = &quot;grey&quot; ), name = &quot;Legalized states&quot;) + 
+  theme(legend.position = &quot;bottom&quot;, ) +
+  labs(title = &quot;Where marijuana is legal in the United States&quot;)</code></pre>
+<pre><code>## Warning: Ignoring unknown parameters: linewidth</code></pre>
+<p><img src="mapping_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code>legalized_table &lt;- 
   legal_state%&gt;% 
   select(-Recreational, -Medical) %&gt;% 
   rename(c( &quot;States&quot; = &quot;full&quot;,  &quot;Recreational legalized year&quot; = &quot;Year_legalized_REC&quot;, &quot;Medical legalized year&quot; = &quot;Year_legalized_MED&quot;, &quot;Legalization&quot; = &quot;status&quot;)
   ) %&gt;% 
-  knitr::kable()</code></pre>
+  knitr::kable()
+
+legalized_table</code></pre>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="30%" />
+<col width="24%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">States</th>
+<th align="right">Recreational legalized year</th>
+<th align="right">Medical legalized year</th>
+<th align="left">Legalization</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">California</td>
+<td align="right">2016</td>
+<td align="right">1996</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Alaska</td>
+<td align="right">2014</td>
+<td align="right">1998</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Nevada</td>
+<td align="right">2016</td>
+<td align="right">1998</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Oregon</td>
+<td align="right">2014</td>
+<td align="right">1998</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Washington</td>
+<td align="right">2012</td>
+<td align="right">1998</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Maine</td>
+<td align="right">2016</td>
+<td align="right">1999</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Colorado</td>
+<td align="right">2012</td>
+<td align="right">2000</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Hawaii</td>
+<td align="right">NA</td>
+<td align="right">2000</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Montana</td>
+<td align="right">2020</td>
+<td align="right">2004</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Vermont</td>
+<td align="right">2020</td>
+<td align="right">2004</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Rhode Island</td>
+<td align="right">2022</td>
+<td align="right">2006</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="even">
+<td align="left">New Mexico</td>
+<td align="right">2021</td>
+<td align="right">2007</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Michigan</td>
+<td align="right">2018</td>
+<td align="right">2008</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Arizona</td>
+<td align="right">2020</td>
+<td align="right">2010</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">New Jersey</td>
+<td align="right">2020</td>
+<td align="right">2010</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Delaware</td>
+<td align="right">NA</td>
+<td align="right">2011</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Connecticut</td>
+<td align="right">2021</td>
+<td align="right">2012</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Massachusetts</td>
+<td align="right">2016</td>
+<td align="right">2012</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Illinois</td>
+<td align="right">2019</td>
+<td align="right">2013</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Maryland</td>
+<td align="right">2022</td>
+<td align="right">2013</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">New Hampshire</td>
+<td align="right">NA</td>
+<td align="right">2013</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Minnesota</td>
+<td align="right">NA</td>
+<td align="right">2014</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">New York</td>
+<td align="right">2021</td>
+<td align="right">2014</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Georgia</td>
+<td align="right">NA</td>
+<td align="right">2015</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Louisiana</td>
+<td align="right">NA</td>
+<td align="right">2015</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Arkansas</td>
+<td align="right">NA</td>
+<td align="right">2016</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Florida</td>
+<td align="right">NA</td>
+<td align="right">2016</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="even">
+<td align="left">North Dakota</td>
+<td align="right">NA</td>
+<td align="right">2016</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Ohio</td>
+<td align="right">NA</td>
+<td align="right">2016</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Pennsylvania</td>
+<td align="right">NA</td>
+<td align="right">2016</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Iowa</td>
+<td align="right">NA</td>
+<td align="right">2017</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="even">
+<td align="left">West Virginia</td>
+<td align="right">NA</td>
+<td align="right">2017</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Missouri</td>
+<td align="right">2022</td>
+<td align="right">2018</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Oklahoma</td>
+<td align="right">NA</td>
+<td align="right">2018</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Utah</td>
+<td align="right">NA</td>
+<td align="right">2018</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Mississippi</td>
+<td align="right">NA</td>
+<td align="right">2022</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">South Dakota</td>
+<td align="right">NA</td>
+<td align="right">2020</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Virginia</td>
+<td align="right">2021</td>
+<td align="right">2020</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+<tr class="odd">
+<td align="left">Alabama</td>
+<td align="right">NA</td>
+<td align="right">2021</td>
+<td align="left">Medical</td>
+</tr>
+<tr class="even">
+<td align="left">Idaho</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">None</td>
+</tr>
+<tr class="odd">
+<td align="left">Indiana</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">None</td>
+</tr>
+<tr class="even">
+<td align="left">Kansas</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">None</td>
+</tr>
+<tr class="odd">
+<td align="left">Kentucky</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">None</td>
+</tr>
+<tr class="even">
+<td align="left">Nebraska</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">None</td>
+</tr>
+<tr class="odd">
+<td align="left">North Carolina</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">None</td>
+</tr>
+<tr class="even">
+<td align="left">South Carolina</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">None</td>
+</tr>
+<tr class="odd">
+<td align="left">Tennessee</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">None</td>
+</tr>
+<tr class="even">
+<td align="left">Texas</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">None</td>
+</tr>
+<tr class="odd">
+<td align="left">Wisconsin</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">None</td>
+</tr>
+<tr class="even">
+<td align="left">Wyoming</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">None</td>
+</tr>
+<tr class="odd">
+<td align="left">District of Columbia</td>
+<td align="right">2015</td>
+<td align="right">2011</td>
+<td align="left">Recreational/Medical</td>
+</tr>
+</tbody>
+</table>
 <p>add population into the map: <a
 href="https://cran.r-project.org/web/packages/usmap/vignettes/advanced-mapping.html"
 class="uri">https://cran.r-project.org/web/packages/usmap/vignettes/advanced-mapping.html</a></p>
+<p><a
+href="https://bhaskarvk.github.io/user2017.geodataviz/notebooks/03-Interactive-Maps.nb.html"
+class="uri">https://bhaskarvk.github.io/user2017.geodataviz/notebooks/03-Interactive-Maps.nb.html</a></p>
 <p>mapping_df &lt;-inner_join(MainStates, legal_state, by = “region”)
 #更改每个州名字的格式</p>
 

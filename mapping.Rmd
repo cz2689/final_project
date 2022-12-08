@@ -2,7 +2,7 @@
 title: "mapping"
 author: "Qiaoyi Xu"
 date: "2022-12-06"
-output: github_document
+output:  github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -15,6 +15,7 @@ library(dplyr)
 library(usmap)
 library(ggplot2)
 require(maps)
+library(ggrepel)
 ```
 
 
@@ -45,6 +46,9 @@ mapping_df <- mapping_df %>%
   select(-pop_2015) %>%
   mutate(status = factor(status))
 
+labels = usmapdata::centroid_labels("states")
+state_labels <- merge(mapping_df, labels, by = "fips")
+
 plot_usmap(regions = "states", data=mapping_df, values = "status",labels = TRUE)+ 
   theme(panel.background = element_rect(colour = "black")) +
   scale_fill_manual(values = c(`Recreational/Medical` = "red", `Medical` = "blue", `None` = "grey" ), name = "Legalized states") + 
@@ -53,6 +57,19 @@ plot_usmap(regions = "states", data=mapping_df, values = "status",labels = TRUE)
 
 ```
 
+```{r}
+plot_usmap(regions = "states", data=mapping_df, values = "status")+ 
+  ggrepel::geom_label_repel(data = labels,
+             aes(x = x, y = y, label = abbr),
+             size = 3, alpha = 0.8,
+             label.r = unit(0.5, "lines"), label.size = 0.5,
+             segment.color = "red", segment.size = 1,
+             seed = 1002) +
+  theme(panel.background = element_rect(colour = "black")) +
+  scale_fill_manual(values = c(`Recreational/Medical` = "red", `Medical` = "blue", `None` = "grey" ), name = "Legalized states") + 
+  theme(legend.position = "bottom", ) +
+  labs(title = "Where marijuana is legal in the United States")
+```
 
 ```{r}
 legalized_table <- 
@@ -61,10 +78,14 @@ legalized_table <-
   rename(c( "States" = "full",  "Recreational legalized year" = "Year_legalized_REC", "Medical legalized year" = "Year_legalized_MED", "Legalization" = "status")
   ) %>% 
   knitr::kable()
+
+legalized_table
 ```
 
 add population into the map:
 https://cran.r-project.org/web/packages/usmap/vignettes/advanced-mapping.html
+
+https://bhaskarvk.github.io/user2017.geodataviz/notebooks/03-Interactive-Maps.nb.html 
 
 
 ```{r, echo=FALSE, eval=FALSE}
