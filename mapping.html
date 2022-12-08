@@ -34,6 +34,9 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/pymjs-1.3.2/pym.v1.js"></script>
+<script src="site_libs/widgetframe-binding-0.3.1/widgetframe.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -313,7 +316,24 @@ require(maps)</code></pre>
 ## The following object is masked from &#39;package:purrr&#39;:
 ## 
 ##     map</code></pre>
-<pre class="r"><code>library(ggrepel)</code></pre>
+<pre class="r"><code>library(ggrepel)
+library(plotly)</code></pre>
+<pre><code>## 
+## 载入程辑包：&#39;plotly&#39;
+## 
+## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot
+## 
+## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter
+## 
+## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout</code></pre>
+<pre class="r"><code>library(widgetframe)</code></pre>
+<pre><code>## 载入需要的程辑包：htmlwidgets</code></pre>
 <pre class="r"><code>legal_state = read_csv(&quot;data/legalization_state.csv&quot;) </code></pre>
 <pre><code>## Rows: 51 Columns: 5
 ## ── Column specification ────────────────────────────────────────────────────────
@@ -359,12 +379,15 @@ mapping_df &lt;- mapping_df %&gt;%
 labels = usmapdata::centroid_labels(&quot;states&quot;)
 state_labels &lt;- merge(mapping_df, labels, by = &quot;fips&quot;)
 
-plot_usmap(regions = &quot;states&quot;, data=mapping_df, values = &quot;status&quot;,labels = TRUE)+ 
+map = plot_usmap(regions = &quot;states&quot;, data=mapping_df, values = &quot;status&quot;,color = &quot;white&quot;, labels = TRUE)+ 
   theme(panel.background = element_rect(colour = &quot;black&quot;)) +
   scale_fill_manual(values = c(`Recreational/Medical` = &quot;red&quot;, `Medical` = &quot;blue&quot;, `None` = &quot;grey&quot; ), name = &quot;Legalized states&quot;) + 
-  theme(legend.position = &quot;bottom&quot;, ) +
+  theme(legend.position = &quot;bottom&quot;) +
   labs(title = &quot;Where marijuana is legal in the United States&quot;)</code></pre>
 <pre><code>## Warning: Ignoring unknown parameters: linewidth</code></pre>
+<pre class="r"><code>map$layers[[2]]$aes_params$size &lt;- 3
+
+print(map)</code></pre>
 <p><img src="mapping_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code>plot_usmap(regions = &quot;states&quot;, data=mapping_df, values = &quot;status&quot;)+ 
   ggrepel::geom_label_repel(data = labels,
@@ -379,6 +402,14 @@ plot_usmap(regions = &quot;states&quot;, data=mapping_df, values = &quot;status&
   labs(title = &quot;Where marijuana is legal in the United States&quot;)</code></pre>
 <pre><code>## Warning: Ignoring unknown parameters: linewidth</code></pre>
 <p><img src="mapping_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>ggplotly(map) %&gt;%
+  highlight(
+    &quot;plotly_hover&quot;,
+    selected = attrs_selected(line = list(color = &quot;black&quot;))
+) %&gt;%
+  widgetframe::frameWidget()</code></pre>
+<div id="htmlwidget-01c0a70593745fb4c7fd" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-01c0a70593745fb4c7fd">{"x":{"url":"mapping_files/figure-html//widgets/widget_unnamed-chunk-5.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>legalized_table &lt;- 
   legal_state%&gt;% 
   select(-Recreational, -Medical) %&gt;% 
