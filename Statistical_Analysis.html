@@ -341,7 +341,7 @@ div.tocify {
   <a href="mapping.html">Mapping</a>
 </li>
 <li>
-  <a href="statistical_Analysis.html">Statistical Analysis</a>
+  <a href="Statistical_Analysis.html">Statistical Analysis</a>
 </li>
 <li>
   <a href="report.html">Project Report</a>
@@ -377,9 +377,423 @@ div.tocify {
 </div>
 
 
+<div id="prevalence-of-depression-by-sociodemographic-characteristcs"
+class="section level2">
+<h2>Prevalence of depression by sociodemographic characteristcs</h2>
+<p>Below is a table showing percent of youth depression.</p>
+<pre class="r"><code>data %&gt;% 
+  select(catag6, ymdeyr) %&gt;% 
+  drop_na(ymdeyr) %&gt;% 
+  mutate(ymdeyr = ifelse(ymdeyr == 2, 0, 1),
+         catag6 = recode(catag6, &quot;1&quot; = &quot;12-17 years old&quot;,
+                         &quot;2&quot; = &quot;18-25 years old&quot;,
+                         &quot;3&quot; = &quot;26-34 years old&quot;,
+                         &quot;4&quot; = &quot;35-49 years old&quot;,
+                         &quot;5&quot; = &quot;50-64 years old&quot;,
+                         &quot;6&quot; = &quot;65+ years old&quot;
+                         )) %&gt;% 
+  group_by(catag6) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">catag6</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">12-17 years old</td>
+<td align="right">16.2</td>
+</tr>
+</tbody>
+</table>
+<p>Below is a table showing percent of adult depression among each age
+categories.</p>
+<pre class="r"><code>data %&gt;% 
+  select(catag6, amdeyr) %&gt;% 
+  drop_na(amdeyr) %&gt;% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         catag6 = recode(catag6, &quot;1&quot; = &quot;12-17 years old&quot;,
+                         &quot;2&quot; = &quot;18-25 years old&quot;,
+                         &quot;3&quot; = &quot;26-34 years old&quot;,
+                         &quot;4&quot; = &quot;35-49 years old&quot;,
+                         &quot;5&quot; = &quot;50-64 years old&quot;,
+                         &quot;6&quot; = &quot;65+ years old&quot;
+                         )) %&gt;% 
+  group_by(catag6) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">catag6</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">18-25 years old</td>
+<td align="right">15.47</td>
+</tr>
+<tr class="even">
+<td align="left">26-34 years old</td>
+<td align="right">10.99</td>
+</tr>
+<tr class="odd">
+<td align="left">35-49 years old</td>
+<td align="right">8.51</td>
+</tr>
+<tr class="even">
+<td align="left">50-64 years old</td>
+<td align="right">6.21</td>
+</tr>
+<tr class="odd">
+<td align="left">65+ years old</td>
+<td align="right">3.43</td>
+</tr>
+</tbody>
+</table>
+<p>Below is a table showing percent of youth depression by gender.</p>
+<pre class="r"><code>data %&gt;% 
+  select(irsex, ymdeyr) %&gt;% 
+  drop_na(ymdeyr) %&gt;% 
+  mutate(ymdeyr = ifelse(ymdeyr == 2, 0, 1),
+         irsex = recode(irsex, &quot;1&quot; = &quot;Male&quot;,
+                         &quot;2&quot; = &quot;Female&quot;)) %&gt;% 
+  group_by(irsex) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">irsex</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Female</td>
+<td align="right">23.62</td>
+</tr>
+<tr class="even">
+<td align="left">Male</td>
+<td align="right">9.18</td>
+</tr>
+</tbody>
+</table>
+<p>Below is a table showing percent of adult depression by gender.</p>
+<pre class="r"><code>data %&gt;% 
+  select(irsex, amdeyr) %&gt;% 
+  drop_na(amdeyr) %&gt;% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         irsex = recode(irsex, &quot;1&quot; = &quot;Male&quot;,
+                         &quot;2&quot; = &quot;Female&quot;)) %&gt;% 
+  group_by(irsex) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">irsex</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Female</td>
+<td align="right">12.99</td>
+</tr>
+<tr class="even">
+<td align="left">Male</td>
+<td align="right">7.84</td>
+</tr>
+</tbody>
+</table>
+<p>Below is a table showing percent of youth depression by race.</p>
+<pre class="r"><code>data %&gt;% 
+  select(newrace2, ymdeyr) %&gt;% 
+  drop_na(ymdeyr) %&gt;% 
+  mutate(ymdeyr = ifelse(ymdeyr == 2, 0, 1),
+         newrace2 = recode(newrace2, &quot;1&quot; = &quot;NonHisp White&quot;,
+                         &quot;2&quot; = &quot;NonHisp Black&quot;,
+                         &quot;3&quot; = &quot;NonHisp Native Am&quot;,
+                         &quot;4&quot; = &quot;NonHisp Native HI&quot;,
+                         &quot;5&quot; = &quot;NonHisp Asian&quot;,
+                         &quot;6&quot; = &quot;NonHisp more than one race&quot;,
+                         &quot;7&quot; = &quot;Hispanic&quot;
+                         )) %&gt;% 
+  group_by(newrace2) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">newrace2</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Hispanic</td>
+<td align="right">17.65</td>
+</tr>
+<tr class="even">
+<td align="left">NonHisp Asian</td>
+<td align="right">13.91</td>
+</tr>
+<tr class="odd">
+<td align="left">NonHisp Black</td>
+<td align="right">11.61</td>
+</tr>
+<tr class="even">
+<td align="left">NonHisp more than one race</td>
+<td align="right">20.61</td>
+</tr>
+<tr class="odd">
+<td align="left">NonHisp Native Am</td>
+<td align="right">17.09</td>
+</tr>
+<tr class="even">
+<td align="left">NonHisp Native HI</td>
+<td align="right">13.33</td>
+</tr>
+<tr class="odd">
+<td align="left">NonHisp White</td>
+<td align="right">16.42</td>
+</tr>
+</tbody>
+</table>
+<p>Below is a table showing percent of adult depression by race.</p>
+<pre class="r"><code>data %&gt;% 
+  select(newrace2, amdeyr) %&gt;% 
+  drop_na(amdeyr) %&gt;% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         newrace2 = recode(newrace2, &quot;1&quot; = &quot;NonHisp White&quot;,
+                         &quot;2&quot; = &quot;NonHisp Black&quot;,
+                         &quot;3&quot; = &quot;NonHisp Native Am&quot;,
+                         &quot;4&quot; = &quot;NonHisp Native HI&quot;,
+                         &quot;5&quot; = &quot;NonHisp Asian&quot;,
+                         &quot;6&quot; = &quot;NonHisp more than one race&quot;,
+                         &quot;7&quot; = &quot;Hispanic&quot;
+                         )) %&gt;% 
+  group_by(newrace2) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">newrace2</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Hispanic</td>
+<td align="right">8.99</td>
+</tr>
+<tr class="even">
+<td align="left">NonHisp Asian</td>
+<td align="right">6.79</td>
+</tr>
+<tr class="odd">
+<td align="left">NonHisp Black</td>
+<td align="right">7.71</td>
+</tr>
+<tr class="even">
+<td align="left">NonHisp more than one race</td>
+<td align="right">16.20</td>
+</tr>
+<tr class="odd">
+<td align="left">NonHisp Native Am</td>
+<td align="right">11.99</td>
+</tr>
+<tr class="even">
+<td align="left">NonHisp Native HI</td>
+<td align="right">5.86</td>
+</tr>
+<tr class="odd">
+<td align="left">NonHisp White</td>
+<td align="right">11.70</td>
+</tr>
+</tbody>
+</table>
+<p>Below is a table showing percent of adult depression by education
+level.<br />
+We are not considering youth education in this case.</p>
+<pre class="r"><code>data %&gt;% 
+  select(eduhighcat, amdeyr) %&gt;% 
+  drop_na(amdeyr) %&gt;% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         eduhighcat = recode(eduhighcat, &quot;1&quot; = &quot;Less high school&quot;,
+                         &quot;2&quot; = &quot;High school grad&quot;,
+                         &quot;3&quot; = &quot;Some coll/Assoc&quot;,
+                         &quot;4&quot; = &quot;College graduate&quot;
+                         )) %&gt;% 
+  group_by(eduhighcat) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">eduhighcat</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">College graduate</td>
+<td align="right">8.85</td>
+</tr>
+<tr class="even">
+<td align="left">High school grad</td>
+<td align="right">10.28</td>
+</tr>
+<tr class="odd">
+<td align="left">Less high school</td>
+<td align="right">7.82</td>
+</tr>
+<tr class="even">
+<td align="left">Some coll/Assoc</td>
+<td align="right">13.23</td>
+</tr>
+</tbody>
+</table>
+<p>Below is a table showing percent of youth depression by family
+income.</p>
+<pre class="r"><code>data %&gt;% 
+  select(income, ymdeyr) %&gt;% 
+  drop_na(ymdeyr) %&gt;% 
+  mutate(ymdeyr = ifelse(ymdeyr == 2, 0, 1),
+         income = recode(income, &quot;1&quot; = &quot;Less than $20,000&quot;,
+                         &quot;2&quot; = &quot;$20,000 - $49,999&quot;,
+                         &quot;3&quot; = &quot;$50,000 - $74,999&quot;,
+                         &quot;4&quot; = &quot;$75,000 or More&quot;
+                         )) %&gt;% 
+  group_by(income) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">income</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">$20,000 - $49,999</td>
+<td align="right">16.03</td>
+</tr>
+<tr class="even">
+<td align="left">$50,000 - $74,999</td>
+<td align="right">19.37</td>
+</tr>
+<tr class="odd">
+<td align="left">$75,000 or More</td>
+<td align="right">15.36</td>
+</tr>
+<tr class="even">
+<td align="left">Less than $20,000</td>
+<td align="right">15.68</td>
+</tr>
+</tbody>
+</table>
+<p>Below is a table showing percent of adult depression by family
+income.</p>
+<pre class="r"><code>data %&gt;% 
+  select(income, amdeyr) %&gt;% 
+  drop_na(amdeyr) %&gt;% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         income = recode(income, &quot;1&quot; = &quot;Less than $20,000&quot;,
+                         &quot;2&quot; = &quot;$20,000 - $49,999&quot;,
+                         &quot;3&quot; = &quot;$50,000 - $74,999&quot;,
+                         &quot;4&quot; = &quot;$75,000 or More&quot;
+                         )) %&gt;% 
+  group_by(income) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">income</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">$20,000 - $49,999</td>
+<td align="right">11.39</td>
+</tr>
+<tr class="even">
+<td align="left">$50,000 - $74,999</td>
+<td align="right">10.55</td>
+</tr>
+<tr class="odd">
+<td align="left">$75,000 or More</td>
+<td align="right">8.12</td>
+</tr>
+<tr class="even">
+<td align="left">Less than $20,000</td>
+<td align="right">14.13</td>
+</tr>
+</tbody>
+</table>
+<p>Below is a table showing percent of adult depression by marital
+status.</p>
+<pre class="r"><code>data %&gt;% 
+  select(irmarit, amdeyr) %&gt;% 
+  drop_na(amdeyr) %&gt;% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         irmarit = recode(irmarit, &quot;1&quot; = &quot;Married&quot;,
+                         &quot;2&quot; = &quot;Widowed&quot;,
+                         &quot;3&quot; = &quot;Divorced or Separated&quot;,
+                         &quot;4&quot; = &quot;Never Been Married&quot;
+                         )) %&gt;% 
+  group_by(irmarit) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">irmarit</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Divorced or Separated</td>
+<td align="right">12.19</td>
+</tr>
+<tr class="even">
+<td align="left">Married</td>
+<td align="right">6.51</td>
+</tr>
+<tr class="odd">
+<td align="left">Never Been Married</td>
+<td align="right">13.93</td>
+</tr>
+<tr class="even">
+<td align="left">Widowed</td>
+<td align="right">7.67</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="logistic-regression-youths-12---17-years-old"
-class="section level1">
-<h1>Logistic regression — Youths (12 - 17 years old)</h1>
+class="section level2">
+<h2>Logistic regression — Youths (12 - 17 years old)</h2>
 <p>We perform a logistic regression on our outcome and exposure on
 youths while adjusting for other covariates.<br />
 ymdeyr (youth depression) = mrjmon (Past month marijuana Use) + catag6
@@ -418,8 +832,8 @@ youth who used cannabis in the past month to those who do not adjusting
 for age, sex, race, region.</p>
 </div>
 <div id="hypothesis-testing-youths-12---17-years-old"
-class="section level1">
-<h1>Hypothesis testing — Youths (12 - 17 years old)</h1>
+class="section level2">
+<h2>Hypothesis testing — Youths (12 - 17 years old)</h2>
 <p>Is the beta for our exposure variable truly different from
 zero?<br />
 We obtained the p.value from the t.test statistics.</p>
@@ -451,8 +865,8 @@ No is very large and the resulting p.value is close to zero. Our beta
 coefficient of the exposure variable is significant.</p>
 </div>
 <div id="logistic-regression-adults-18-years-old"
-class="section level1">
-<h1>Logistic regression — Adults (18 + years old)</h1>
+class="section level2">
+<h2>Logistic regression — Adults (18 + years old)</h2>
 <p>We perform a logistic regression on our outcome and exposure on
 adults while adjusting for other covariates.<br />
 amdeyr (adult depression) = mrjmon (Past month marijuana Use) + catag6
@@ -491,8 +905,8 @@ And the resulting odds ratio is shown below:</p>
 adults who used cannabis in the past month to those who do not adjusting
 for age, sex, race, education, region, income, and martial status.</p>
 </div>
-<div id="hypothesis-testing-adults-18-years-old" class="section level1">
-<h1>Hypothesis testing — Adults (18 + years old)</h1>
+<div id="hypothesis-testing-adults-18-years-old" class="section level2">
+<h2>Hypothesis testing — Adults (18 + years old)</h2>
 <p>Is the beta for our exposure variable truly different from
 zero?<br />
 We obtained the p.value from the t.test statistics.</p>
@@ -522,12 +936,6 @@ We obtained the p.value from the t.test statistics.</p>
 <code>mrjmon1</code> which is marijuana past month use comparing Yes to
 No is very large and the resulting p.value is close to zero. Our beta
 coefficient of the exposure variable is significant.</p>
-<p>reg %&gt;% mutate(coutyp4 = as.character(coutyp4), coutyp4 =
-recode(coutyp4, “1” = “Large Metro”, “2” = “Small Metro”, “3” =
-“Nonmetro”), coutyp4 = fct_relevel(coutyp4, “Large Metro”, “Small
-Metro”, “Nonmetro”)) %&gt;% group_by(coutyp4) %&gt;% summarise( youth =
-round(sum(youth_dpr, na.rm=TRUE)/n()<em>100, 2), adult =
-round(sum(adult_dpr, na.rm=TRUE)/n()</em>100, 2))</p>
 </div>
 
 

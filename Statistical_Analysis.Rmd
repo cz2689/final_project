@@ -29,7 +29,183 @@ reg = data %>%
          )
 ```
 
-# Logistic regression --- Youths (12 - 17 years old)
+## Prevalence of depression by sociodemographic characteristcs
+Below is a table showing percent of youth depression. 
+```{r}
+data %>% 
+  select(catag6, ymdeyr) %>% 
+  drop_na(ymdeyr) %>% 
+  mutate(ymdeyr = ifelse(ymdeyr == 2, 0, 1),
+         catag6 = recode(catag6, "1" = "12-17 years old",
+                         "2" = "18-25 years old",
+                         "3" = "26-34 years old",
+                         "4" = "35-49 years old",
+                         "5" = "50-64 years old",
+                         "6" = "65+ years old"
+                         )) %>% 
+  group_by(catag6) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+
+Below is a table showing percent of adult depression among each age categories. 
+```{r}
+data %>% 
+  select(catag6, amdeyr) %>% 
+  drop_na(amdeyr) %>% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         catag6 = recode(catag6, "1" = "12-17 years old",
+                         "2" = "18-25 years old",
+                         "3" = "26-34 years old",
+                         "4" = "35-49 years old",
+                         "5" = "50-64 years old",
+                         "6" = "65+ years old"
+                         )) %>% 
+  group_by(catag6) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+
+Below is a table showing percent of youth depression by gender. 
+```{r}
+data %>% 
+  select(irsex, ymdeyr) %>% 
+  drop_na(ymdeyr) %>% 
+  mutate(ymdeyr = ifelse(ymdeyr == 2, 0, 1),
+         irsex = recode(irsex, "1" = "Male",
+                         "2" = "Female")) %>% 
+  group_by(irsex) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+
+Below is a table showing percent of adult depression by gender. 
+```{r}
+data %>% 
+  select(irsex, amdeyr) %>% 
+  drop_na(amdeyr) %>% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         irsex = recode(irsex, "1" = "Male",
+                         "2" = "Female")) %>% 
+  group_by(irsex) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+
+Below is a table showing percent of youth depression by race. 
+```{r}
+data %>% 
+  select(newrace2, ymdeyr) %>% 
+  drop_na(ymdeyr) %>% 
+  mutate(ymdeyr = ifelse(ymdeyr == 2, 0, 1),
+         newrace2 = recode(newrace2, "1" = "NonHisp White",
+                         "2" = "NonHisp Black",
+                         "3" = "NonHisp Native Am",
+                         "4" = "NonHisp Native HI",
+                         "5" = "NonHisp Asian",
+                         "6" = "NonHisp more than one race",
+                         "7" = "Hispanic"
+                         )) %>% 
+  group_by(newrace2) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+
+Below is a table showing percent of adult depression by race. 
+```{r}
+data %>% 
+  select(newrace2, amdeyr) %>% 
+  drop_na(amdeyr) %>% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         newrace2 = recode(newrace2, "1" = "NonHisp White",
+                         "2" = "NonHisp Black",
+                         "3" = "NonHisp Native Am",
+                         "4" = "NonHisp Native HI",
+                         "5" = "NonHisp Asian",
+                         "6" = "NonHisp more than one race",
+                         "7" = "Hispanic"
+                         )) %>% 
+  group_by(newrace2) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+
+Below is a table showing percent of adult depression by education level.  
+We are not considering youth education in this case. 
+```{r}
+data %>% 
+  select(eduhighcat, amdeyr) %>% 
+  drop_na(amdeyr) %>% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         eduhighcat = recode(eduhighcat, "1" = "Less high school",
+                         "2" = "High school grad",
+                         "3" = "Some coll/Assoc",
+                         "4" = "College graduate"
+                         )) %>% 
+  group_by(eduhighcat) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+
+Below is a table showing percent of youth depression by family income.  
+```{r}
+data %>% 
+  select(income, ymdeyr) %>% 
+  drop_na(ymdeyr) %>% 
+  mutate(ymdeyr = ifelse(ymdeyr == 2, 0, 1),
+         income = recode(income, "1" = "Less than $20,000",
+                         "2" = "$20,000 - $49,999",
+                         "3" = "$50,000 - $74,999",
+                         "4" = "$75,000 or More"
+                         )) %>% 
+  group_by(income) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+
+Below is a table showing percent of adult depression by family income.  
+```{r}
+data %>% 
+  select(income, amdeyr) %>% 
+  drop_na(amdeyr) %>% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         income = recode(income, "1" = "Less than $20,000",
+                         "2" = "$20,000 - $49,999",
+                         "3" = "$50,000 - $74,999",
+                         "4" = "$75,000 or More"
+                         )) %>% 
+  group_by(income) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+
+Below is a table showing percent of adult depression by marital status.  
+```{r}
+data %>% 
+  select(irmarit, amdeyr) %>% 
+  drop_na(amdeyr) %>% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         irmarit = recode(irmarit, "1" = "Married",
+                         "2" = "Widowed",
+                         "3" = "Divorced or Separated",
+                         "4" = "Never Been Married"
+                         )) %>% 
+  group_by(irmarit) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+
+## Logistic regression --- Youths (12 - 17 years old)
 We perform a logistic regression on our outcome and exposure on youths while adjusting for other covariates.  
 ymdeyr (youth depression) = mrjmon (Past month marijuana Use) + catag6 (age) + irsex (sex) + newrace2 (race) + coutyp4 (region)  
 And the resulting odds ratio is shown below:
@@ -48,7 +224,7 @@ reg %>%
 The odds of depression is 2.673 (95% CI: 2.309 - 3.093) comparing youth who used cannabis in the past month to those who do not adjusting for age, sex, race, region. 
 
 
-# Hypothesis testing --- Youths (12 - 17 years old)
+## Hypothesis testing --- Youths (12 - 17 years old)
 Is the beta for our exposure variable truly different from zero?  
 We obtained the p.value from the t.test statistics.
 ```{r}
@@ -62,7 +238,7 @@ reg %>%
 As we can see that the t-tests statistic for the term `mrjmon1` which is marijuana past month use comparing Yes to No is very large and the resulting p.value is close to zero. Our beta coefficient of the exposure variable is significant. 
 
 
-# Logistic regression --- Adults (18 + years old)
+## Logistic regression --- Adults (18 + years old)
 We perform a logistic regression on our outcome and exposure on adults while adjusting for other covariates.  
 amdeyr (adult depression) = mrjmon (Past month marijuana Use) + catag6 (age) + irsex (sex) + newrace2 (race)  + eduhighcat (education) + coutyp4 (region) + income (income) + irmarit (martial status)  
 And the resulting odds ratio is shown below:
@@ -81,7 +257,7 @@ reg %>%
 The odds of depression is 1.935 (95% CI: 1.795 - 2.086) comparing adults who used cannabis in the past month to those who do not adjusting for age, sex, race, education, region, income, and martial status. 
 
 
-# Hypothesis testing --- Adults (18 + years old)
+## Hypothesis testing --- Adults (18 + years old)
 Is the beta for our exposure variable truly different from zero?  
 We obtained the p.value from the t.test statistics.
 ```{r}
@@ -97,25 +273,6 @@ As we can see that the t-tests statistic for the term `mrjmon1` which is marijua
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-reg %>% 
-mutate(coutyp4 = as.character(coutyp4),
-    coutyp4 = recode(coutyp4, 
-                     "1" = "Large Metro", "2" = "Small Metro", "3" = "Nonmetro"),
-    coutyp4 = fct_relevel(coutyp4, "Large Metro", "Small Metro", "Nonmetro")) %>% 
-  group_by(coutyp4) %>% 
-    summarise( youth = round(sum(youth_dpr, na.rm=TRUE)/n()*100, 2),
-               adult = round(sum(adult_dpr, na.rm=TRUE)/n()*100, 2))
 
 
 
