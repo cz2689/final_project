@@ -1,0 +1,10 @@
+---
+title: "data_source"
+author: "Tianyou Wang"
+date: "2022-12-08"
+output:  html_document
+---
+
+To study the association between marijuana use and mental health, we used data from the 2019 National Survey on Drug Use and Health ([NSDUH](https://nsduhweb.rti.org/respweb/homepage.cfm)). We will attach the used 2019 code book below. The dataset is downloadable in various forms, including SAS, STATA, R etc. Click [here.](https://www.datafiles.samhsa.gov/dataset/national-survey-drug-use-and-health-2019-nsduh-2019-ds0001)
+
+<iframe src ="file/NSDUH_2019_codebook.pdf" width="50%" height="500px">
