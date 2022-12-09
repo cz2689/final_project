@@ -20,7 +20,7 @@ library(flexdashboard)
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Chart A
+### Chart A: Where marijuana is legal in the United States?
 
 ```{r}
 legal_state = read_csv("data/legalization_state.csv") 
@@ -50,7 +50,7 @@ map = plot_usmap(regions = "states", data=mapping_df, values = "status",color = 
   theme(panel.background = element_rect(colour = "black")) +
   scale_fill_manual(values = c(`Recreational/Medical` = "red", `Medical` = "blue", `Illegal` = "grey" ), name = "Legalized states") + 
   theme(legend.position = "bottom") +
-  labs(title = "Where marijuana is legal in the United States")
+  labs(title = "Map: Legalized status for marijuana in the United States")
 
 map$layers[[2]]$aes_params$size <- 3
 
@@ -60,24 +60,8 @@ ggplotly(map) %>%
 
 ```
 
-Column {data-width=350}
------------------------------------------------------------------------
 
-### Chart B
-
-```{r}
-legalized_states <- 
-  legal_state%>% 
-  select(-Recreational, -Medical) %>% 
-  mutate(status = fct_relevel(status, "Recreational/Medical", "Medical", "None")) %>%
-  group_by(status) %>%
-  summarise(state_number = n()) %>%
-  knitr::kable(col.names = c("State", "number of states"))
-
-legalized_states
-```
-
-### Chart C
+### Chart B: When marijuana legalized in each State?
 
 ```{r}
 year_df = mapping_df %>%
@@ -94,5 +78,21 @@ legal_year <- year_df %>%
          yaxis = list(title = "States", tickfont = list(size = 5)), xaxis = list(title = "Legalized year")) #add title in the graph
 
 legal_year
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+
+### Chart C: Legalization data 
+
+```{r}
+legalized_states <- legal_state %>%
+  select(-Recreational, -Medical) %>%
+  knitr::kable(col.names = c("State", "Legalization Year for Recreational", "Legalization Year for Medical",
+                             "Legalized status"))
+
+legalized_states
+  
 ```
 
