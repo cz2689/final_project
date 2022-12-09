@@ -1,5 +1,5 @@
 ---
-title: "About Marijuana Use In the United States"
+title: "Marijuana Use and Depression In the United States"
 output: 
   html_document:
     html_document:
@@ -25,6 +25,10 @@ mari_df = nsduh_df %>%
                         "3" = "12+ months")) %>%
   group_by(mjrec)
 ```
+
+In this page, we utilize visualizing tools to explore the marijuana use patterns across age groups and depression prevalence patterns in the United States.
+<br>
+
 
 ## Age and Time-Since-Last-Marijuana-Use
 
@@ -92,7 +96,8 @@ mari_df %>%
 According to the histogram plot, in the 13-year-old, 14-year-old, 16-year-old, 17-year-old, 18-year-old, 19-year-old, 20-year-old, 21-year-old, 22-to-23-year-old groups, the time-since-last-marijuana-use for people are most likely be "0-1 month". However, for people older than 24, the time-since-last-marijuana-use are more likely to be 
 "12+ months". Consequently, as people get older, they tend to use marijuana less often.
 
-
+<br>
+<br>
 
 
 ## Marijuana Use In The Past 30 Days
@@ -151,8 +156,7 @@ graph_fendi %>%
     filter(days30 != 0) %>% 
     ggplot(aes(x = age_cat, y = days30)) +
     geom_boxplot(aes(fill = age_cat), alpha = .5) +
-  labs(title = "Number of Days Used Marijuana in Past 30 Days", 
-       x = "Age(years)", y = "Number of Days") +
+  labs(x = "Age(years)", y = "Number of Days") +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme_minimal()
 
@@ -177,13 +181,15 @@ graph_fendi %>%
     ggplot(aes(x = coutyp4, y = used30_percent)) +
     geom_bar(stat = "identity", width = 0.5, fill = "steelblue") +
   geom_text(aes(label = used30_percent), vjust = 1.6, color = "white", size = 3.5) +
-  labs(title = "Percentage of Individuals Used Marijuana in Past 30 Days By Metro Area", 
-       x = "Metro Area", y = "Percentage(%)") +
+  labs(x = "Metro Area", y = "Percentage(%)") +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme_minimal()
 ```
 
 We can see that the marijuana use patterns in the past 30 days did not vary much across different metro areas. Slightly more individuals from the "large Metro" area (0.17%) used marijuana in the past 30 days of the survey than the other two types of metro areas. 
+
+<br>
+<br>
 
 ## Age When People First Started Using Marijuana
 ```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
@@ -210,6 +216,9 @@ In this part, we created a scatter plot to show the age when first used MARIJUAN
 
 
 From this plot, we could conclude that most people who used Marijuana started between 10 and 30 years old when first used marijuana. So, it is necessary to focus on youth population during our further steps. 
+
+<br>
+<br>
 
 ## Depression Prevalence Pattern
 
