@@ -690,7 +690,8 @@ reg %>%
 
 
 ## Discussion (Alice)
-   limitation + future suggestion 
+
+Based on the 2019 NSDUH, we observed that the prevalence of depression was distributed unevenly across different sociodemographic groups. High-risk groups for depression were identified in our study as females, people with a family annual income less than $20,000, people who are single, and people who self-identified to have more than one race. Additionally, there is a statistically significant association between marijuana use and depression. Comparing to youth who did not use cannabis in the past month, the odds of depression are 167.3% higher in youth who used cannabis in the past month. Although the magnitude of the odds ratio is smaller in the adult group, the odds of depression are still 93.5% higher comparing adults who used cannabis in the past month to those who did not. Consequently, from a public health policy point of view, we should not encourage the legalization of marijuana for recreational use. Although the FDA has approved Epidiolex, a purified form of CBD, for seizure treatment, more regulation should be added to recreational marijuana. Finally, we also want to point out the main limitation of our study we only used the 2019 data. Future studies should include data from multiple years to understand the overall trend. Also, after the COVID-19 pandemic, the prevalence of both marijuana use and depression will also yield a lot of differences. More studies are required on this controversial topic.
 
 
 
