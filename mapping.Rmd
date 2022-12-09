@@ -7,11 +7,12 @@ output:
     toc_float: true
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, warning=FALSE}
 library(tidyverse)
 library(dplyr)
 library(usmap)
@@ -22,8 +23,9 @@ library(plotly)
 library(widgetframe)
 ```
 
+### Where marijuana is legal in the United States?
 
-```{r}
+```{r, warning = FALSE}
 legal_state = read_csv("data/legalization_state.csv") 
 
 legal_state = legal_state %>% 
@@ -41,7 +43,7 @@ legal_state
 
 
 
-```{r}
+```{r, warning = FALSE}
 data(statepop)
 
 mapping_df <-inner_join(statepop, legal_state, by = "full")
@@ -76,9 +78,42 @@ plot_usmap(regions = "states", data=mapping_df, values = "status")+
   labs(title = "Where marijuana is legal in the United States")
 ```
 
-```{r}
+```{r, warning = FALSE}
 ggplotly(map) %>%
   highlight("plotly_hover", selected = attrs_selected(line = list(color = "black"))) 
+```
+
+### How many states legalized for marijuana use?
+```{r, warning = FALSE}
+legalized_states <- 
+  legal_state%>% 
+  select(-Recreational, -Medical) %>% 
+  mutate(status = fct_relevel(status, "Recreational/Medical", "Medical", "None")) %>%
+  group_by(status) %>%
+  summarise(state_number = n()) %>%
+  knitr::kable(col.names = c("State", "number of states"))
+
+legalized_states
+```
+
+### When marijuana legaled in each State?
+
+```{r, warning = FALSE}
+year_df = mapping_df %>%
+  select(full,Year_legalized_REC,Year_legalized_MED) %>%
+  pivot_longer(
+    Year_legalized_REC:Year_legalized_MED,
+    names_to = "rec_med", 
+    values_to = "year")
+
+
+legal_year <- year_df %>%
+  plot_ly(x = ~ year, y = ~full, color = ~rec_med, type = "scatter", mode = "markers") %>%
+  layout(title = "Legalized year of each state", 
+         yaxis = list(title = "States", tickfont = list(size = 5)), xaxis = list(title = "Legalized year")) #add title in the graph
+
+legal_year
+
 ```
 
 
@@ -108,17 +143,6 @@ fig
  
  
  
- 
-```{r}
-legalized_table <- 
-  legal_state%>% 
-  select(-Recreational, -Medical) %>% 
-  rename(c( "States" = "full",  "Recreational legalized year" = "Year_legalized_REC", "Medical legalized year" = "Year_legalized_MED", "Legalization" = "status")
-  ) %>% 
-  knitr::kable()
-
-legalized_table
-```
 
 add population into the map:
 https://cran.r-project.org/web/packages/usmap/vignettes/advanced-mapping.html
