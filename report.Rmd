@@ -18,11 +18,48 @@ library(plotly)
 
 ## Motivation (Alice)
 
+There are around 48 million people in US using marijuana, and it could lead to various health impacts. As more and more states legalize marijuana, marijuana use has been causing significant social impacts and attracting a vast amount of public attention. The legality of marijuana use remains controversial in the US. Each state has their own restrictions on their marijuana laws for both medical and recreational purposes. Based on data from the “World Population Review,” by July 2022, 14 states have fully legalized the use of marijuana. In this project, we will evaluate the association among marijuana use and depression, and we would like to propose recommendations for future studies and policies.
+<br>
+
+
 ## Research Question (A)
 
+In this project, we aim to:
+
+  * understand the association between marijuana use and mental health burdens, using 2019 NSDUH
+  * stratify or adjust for wide a range of demographic and sociodemographic variables
+  * provide suggestions on marijuana legalization for future substance prevention programs and policymakers
+
+
 ## Data Process AND Cleaning
-  a. nsduh: source + used variabels. (A)
-  b. mapping (Joyce)
+
+### **NSDUH**
+
+To study the association between marijuana use and mental health, we used data from the 2019 National Survey on Drug Use and Health ([NSDUH](https://nsduhweb.rti.org/respweb/homepage.cfm)). This nationwide study is sponsored by the Center for Behavioral Health Statistics and Quality within the Substance Abuse and Mental Services Administration (SAMHSA) and is performed annually. It collects up-to-date information on tobacco, alcohol, drug use, mental health and other health-related issues in the general population in the US. Every year, NSDUH interviews approximately 70,000 people aged 12 and older.
+<br>
+
+We picked the 2019 NSDUH, since it is the newest published version besides the 2020 data. Due to the COVID-19 pandemic, SAMHSA suspended in-person data collection on the 2020 NSDUH on March 16, 2020. For the purpose of data collection, a small-scale in-person data collection was conducted in selected counties of two states from July 16 to July 22, 2020, with approval. Also, on September 11, 2020, SAMHSA approved a web-based survey. As NSDUH claimed, in-person and web-based data collections yielded differences in response and non-response patterns. Consequently, we highly question the representativity of the 2020 data. **We believe the 2019 data can give us a more accurate and comprehensive idea about the prevalence and association between marijuana use and mental health.**
+<br>
+
+For the process of data cleaning, first, we defined our marijuana users as people who used marijuana in the past 30 days, since the duration, frequency, and dose of marijuana use are highly related to mental health. Then, we selected the variables that we wound to focused in this project:
+
+  * `age2`: age categories
+  * `mjrec`: time-since-last-aarijuana-sse
+  * `mr30est`: marijuana frequency last month
+  * `coutyp4`: county metro/nonmetro status
+  * `irmjage`: marijuana age of first use
+  * `amdeyr`: past year major depressive episode for adult
+  * `ymdeyr`: past year major depressive episode for youth
+  * `irsex`: gender
+  * `newrace2`: race
+  * `eduhighcat`: education level
+  * `income`: income level
+  * `irmarit`: marital status
+  
+Finally, we filtered out all the missing values. More detailed data manipulation for each visualization graphs can be found in the **EDA** section.
+
+
+### **Mapping (Joyce)**
   
 ## EDA  (Fengdi)
   
