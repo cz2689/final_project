@@ -1,7 +1,5 @@
 ---
 title: "data_source"
-author: "Tianyou Wang"
-date: "2022-12-08"
 output:  html_document
 ---
 

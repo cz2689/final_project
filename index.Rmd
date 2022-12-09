@@ -11,7 +11,7 @@ output:
 
 # **Introduction** 
 
-According to the Centers for Disease Control and Prevention, marijuana is known by different names, such as weed, cannabis, pot, hemp etc. It is a mossy type of plant and refers to the dried flowers, leaves, stems, and seeds of cannabis plants. People commonly take them through smoking, vaping, or consuming marijuana-infused food. Then, cannabis will be carried to the brain via blood circulation and bind to receptors and further change our behaviours.
+According to the Centers for Disease Control and Prevention, marijuana is known by different names, such as weed, cannabis, pot, hemp etc. It is a mossy type of plant and refers to the dried flowers, leaves, stems, and seeds of cannabis plants. People commonly take them through smoking, vaping, or consuming marijuana-infused food. Then, cannabis will be carried to the brain via blood circulation. They bind to receptors and further change our behaviours.
 <br>
 
 Marijuana contains more than 100 components (cannabinoids). Tetrahydrocannabinol (THC) is the main active component that changes people’s mood and behaviour, and causes the “high” (hallucination or paranoia). Another well-known active chemical is cannabidiol (CBD,) but it does not cause a “high.” CBD reduces the psychoactive effects caused by THC and lower anxiety, which inspired the development of plant-based marijuana drugs. The [Food and Drug Administration](https://www.fda.gov/news-events/public-health-focus/fda-and-cannabis-research-and-drug-approval-process) has approved a cannabis-derived drug, Epidiolex, a purified form of CBD. This drug can be used to treat seizures associated with Lennox-Gastaut syndrome, Dravet syndrome, and tuberous sclerosis complex. Additionally, the FDA approved Marinol, Syndros, and Cesamet, three synthetic cannabis-related drugs. 
@@ -27,21 +27,20 @@ There are around 48 million people in US using marijuana, and it could lead to v
 <br>
 
 
-# Video: script cast
+# **Video: Script Cast**
+
+
+
+
+
+# **Website Overview **
 
 
 
 
 
 
-
-
-
-
-
-
-
-# Collaborators
+# **Collaborators**
 Fengdi Zhang (fz2328) : https://github.com/fz2328       
 Tianyou Wang (tw2838) : https://github.com/AliceWTY     
 Qiaoyi Xu (qx2222) : https://github.com/qiaoyixu    
