@@ -1,8 +1,10 @@
 ---
 title: "Mapping"
-author: "Qiaoyi Xu"
-date: "2022-12-06"
-output:  github_document
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
