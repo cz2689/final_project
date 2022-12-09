@@ -6,3 +6,30 @@ output:
     toc: true
     toc_float: true
 ---
+## Motivation (Alice)
+
+## Research Question (A)
+
+## Data Process AND Cleaning
+  a. nsduh: source + used variabels. (A)
+  b. mapping (Joyce)
+  
+## EDA  (Fengdi)
+  data manipulation + graph + interpretation. 
+
+
+## Mapping (Joyce)
+
+
+
+## Statistical Analysis (Joe)
+
+
+## Finding & Summary (Joe)
+
+
+## Discussion (Alice)
+   limitation + future suggestion 
+
+
+
