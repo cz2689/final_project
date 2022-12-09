@@ -35,10 +35,42 @@ There are around 48 million people in US using marijuana, and it could lead to v
 
 # **Website Overview **
 
+In this project, we aim to understand the association between marijuana use and mental health burdens based on the 2019 NSDUH data set. A wide range of demographic and sociodemographic variables, such as sex, age, and region, will also be stratified or adjusted in the data analysis step. We want to provide suggestions on marijuana legalization for future substance prevention programs and policymakers.
+
+In the "[Descriptive Info](https://cz2689.github.io/final_project/Descriptive_Info.html)" section, you can find:
+
+  * Time-since-last-marijuana-use in different age groups
+    * Age distribution in time-since-last-marijuana-use groups
+    * Direct comparision among age groups
+  * Marijuana use in the past 30 days
+    * Number of days used marijuana in past 30 days
+    * Marijuana use in the past 30 days by metro area
+  * Age when pwople first started using marijuana
+  * Depression prevalence pattern
+
+In the "[Mapping](https://cz2689.github.io/final_project/mapping.html)" section, you can find:
+Note: Similiar information can also be found in "[Dashboard](https://cz2689.github.io/final_project/Dashboard.html)".
+
+  * Mapping marijuana legalization
+  * Marijuana legalization year
 
 
+In the "[Statistical Analysis](https://cz2689.github.io/final_project/Statistical_Analysis.html)" section, you can find:
 
+  * Depression by socio-demographic characteristics
+    * Youths (12-17 years old)
+    * Adults (18+ years old)
+  * Logistic regression and hypothesis testing
+    * Youths (12-17 years old)
+    * Adults (18+ years old)
+  * Finding and summary
 
+In the "[Data Source](https://cz2689.github.io/final_project/data_source.html)" section, you can find:
+
+  * Background information about 2019 NSDUM
+  * Why we pick 2019 NSDUM
+
+For more detailed information, please visit the "[Project Report](https://cz2689.github.io/final_project/report.html)".
 
 # **Collaborators**
 Fengdi Zhang (fz2328) : https://github.com/fz2328       

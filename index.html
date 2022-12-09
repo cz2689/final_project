@@ -13,7 +13,7 @@
 
 <title>Marijuana and Mental Health — A Public health Problem</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -184,8 +184,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -193,16 +193,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -410,8 +403,7 @@ tuberous sclerosis complex. Additionally, the FDA approved Marinol,
 Syndros, and Cesamet, three synthetic cannabis-related drugs. <br></p>
 <p>While specially treated marijuana can be used medically, it still
 poses a number of health risks. In this website, we want to focus on the
-association between marijuana use and mental health burdens, such as
-social anxiety, depression, and schizophrenia. <br></p>
+association between marijuana use and depression. <br></p>
 </div>
 <div id="motivation" class="section level1">
 <h1><strong>Motivation</strong></h1>
@@ -423,8 +415,8 @@ use remains controversial in the US. Each state has their own
 restrictions on their marijuana laws for both medical and recreational
 purposes. Based on data from the “World Population Review,” by July
 2022, 14 states have fully legalized the use of marijuana. In this
-project, we will evaluate the association among marijuana use and mental
-health burdens, and we would like to propose recommendations for future
+project, we will evaluate the association among marijuana use and
+depression, and we would like to propose recommendations for future
 studies and policies. <br></p>
 </div>
 <div id="video-script-cast" class="section level1">
@@ -432,6 +424,64 @@ studies and policies. <br></p>
 </div>
 <div id="website-overview" class="section level1">
 <h1><strong>Website Overview </strong></h1>
+<p>In this project, we aim to understand the association between
+marijuana use and mental health burdens based on the 2019 NSDUH data
+set. A wide range of demographic and sociodemographic variables, such as
+sex, age, and region, will also be stratified or adjusted in the data
+analysis step. We want to provide suggestions on marijuana legalization
+for future substance prevention programs and policymakers.</p>
+<p>In the “<a
+href="https://cz2689.github.io/final_project/Descriptive_Info.html">Descriptive
+Info</a>” section, you can find:</p>
+<ul>
+<li>Time-since-last-marijuana-use in different age groups
+<ul>
+<li>Age distribution in time-since-last-marijuana-use groups</li>
+<li>Direct comparision among age groups</li>
+</ul></li>
+<li>Marijuana use in the past 30 days
+<ul>
+<li>Number of days used marijuana in past 30 days</li>
+<li>Marijuana use in the past 30 days by metro area</li>
+</ul></li>
+<li>Age when pwople first started using marijuana</li>
+<li>Depression prevalence pattern</li>
+</ul>
+<p>In the “<a
+href="https://cz2689.github.io/final_project/mapping.html">Mapping</a>”
+section, you can find: Note: Similiar information can also be found in
+“<a
+href="https://cz2689.github.io/final_project/Dashboard.html">Dashboard</a>”.</p>
+<ul>
+<li>Mapping marijuana legalization</li>
+<li>Marijuana legalization year</li>
+</ul>
+<p>In the “<a
+href="https://cz2689.github.io/final_project/Statistical_Analysis.html">Statistical
+Analysis</a>” section, you can find:</p>
+<ul>
+<li>Depression by socio-demographic characteristics
+<ul>
+<li>Youths (12-17 years old)</li>
+<li>Adults (18+ years old)</li>
+</ul></li>
+<li>Logistic regression and hypothesis testing
+<ul>
+<li>Youths (12-17 years old)</li>
+<li>Adults (18+ years old)</li>
+</ul></li>
+<li>Finding and summary</li>
+</ul>
+<p>In the “<a
+href="https://cz2689.github.io/final_project/data_source.html">Data
+Source</a>” section, you can find:</p>
+<ul>
+<li>Background information about 2019 NSDUM</li>
+<li>Why we pick 2019 NSDUM</li>
+</ul>
+<p>For more detailed information, please visit the “<a
+href="https://cz2689.github.io/final_project/report.html">Project
+Report</a>”.</p>
 </div>
 <div id="collaborators" class="section level1">
 <h1><strong>Collaborators</strong></h1>
