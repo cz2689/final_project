@@ -5,8 +5,6 @@ navbar:
   right:
     - text: "Descriptive Info"
       href: Descriptive_Info.html
-    - text: "Mapping"
-      href: mapping.html
     - text: "Statistical Analysis"
       href: Statistical_Analysis.html
     - text: "Dashboard"

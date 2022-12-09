@@ -10,6 +10,9 @@ output:
 library(tidyverse)
 library(ggplot2)
 library(ggridges)
+library(dplyr)
+library(usmap)
+library(plotly)
 ```
 
 
@@ -262,6 +265,94 @@ graph_fendi %>%
 
 
 ## Mapping (Joyce)
+
+### Where marijuana is legal in the United States?
+
+```{r, warning = FALSE}
+legal_state = read_csv("data/legalization_state.csv") 
+
+legal_state = legal_state %>% 
+  rename(full = State)
+
+legal_state = legal_state %>%
+  mutate(status = case_when(
+    Recreational == "Yes" & Medical == "Yes" ~ "Recreational/Medical", #rec/med
+    Recreational == "No" & Medical == "Yes" ~ "Medical", #medical legal
+    Recreational == "No" & Medical == "No" ~ "Illegal" #Illegal
+  )) 
+
+```
+
+```{r, warning = FALSE}
+data(statepop)
+
+mapping_df <-inner_join(statepop, legal_state, by = "full")
+
+mapping_df <- mapping_df %>%
+  select(-pop_2015) %>%
+  mutate(status = factor(status))
+
+labels = usmapdata::centroid_labels("states")
+state_labels <- merge(mapping_df, labels, by = "fips")
+
+map = plot_usmap(regions = "states", data=mapping_df, values = "status",color = "white", labels = TRUE)+
+  theme(panel.background = element_rect(colour = "black")) +
+  scale_fill_manual(values = c(`Recreational/Medical` = "red", `Medical` = "blue", `Illegal` = "grey" ), name = "Legalized states") + 
+  theme(legend.position = "bottom") +
+  labs(title = "Where marijuana is legal in the United States")
+
+map$layers[[2]]$aes_params$size <- 3
+```
+
+```{r, warning = FALSE}
+ggplotly(map) %>%
+  highlight("plotly_hover", selected = attrs_selected(line = list(color = "black"))) 
+```
+
+We would like to focus on the legalization status for marijuana use in this part, so we created a map to visualized the result. In this map, different colors filled represent different legalization status in each state. Grey means those states are illegal for marijuana use; Blue means those states are only legal for marijuana medical use; Red means those states are legal for marijuana medicial use and recreational use.
+
+<br>
+
+
+### How many states legalized for marijuana use?
+```{r, warning = FALSE}
+legalized_states <- 
+  legal_state%>% 
+  select(-Recreational, -Medical) %>% 
+  mutate(status = fct_relevel(status, "Recreational/Medical", "Medical", "None")) %>%
+  group_by(status) %>%
+  summarise(state_number = n()) %>%
+  knitr::kable(col.names = c("State", "number of states"))
+
+legalized_states
+```
+
+We created a summarized table to show the number of states for each legalization status. From the previous map and this summarized table ('legalized_states'), there are 22 states that are legal to use marijuana for both recreational and medical. There are 18 states where are only legal to use marijuana for medical. Only 11 states are fully illegal to use marijuana. If you would like to see which specific states are fully illegal, you could check our map or data in our [Dashboard](Dashboard.html). 
+
+<br>
+
+
+### When marijuana legaled in each State?
+
+```{r, warning = FALSE}
+year_df = mapping_df %>%
+  select(full,Year_legalized_REC,Year_legalized_MED) %>%
+  pivot_longer(
+    Year_legalized_REC:Year_legalized_MED,
+    names_to = "rec_med", 
+    values_to = "year")
+
+
+legal_year <- year_df %>%
+  plot_ly(x = ~ year, y = ~full, color = ~rec_med, type = "scatter", mode = "markers") %>%
+  layout(title = "Legalized year of each state", 
+         yaxis = list(title = "States", tickfont = list(size = 5)), xaxis = list(title = "Legalized year")) #add title in the graph
+
+legal_year
+
+```
+
+
 
 
 

@@ -12,7 +12,7 @@ info_scatter = read_csv("data/nsduh_19.csv")
 ```
 
     ## Rows: 56136 Columns: 15
-    ## ── Column specification ──────────────────────────
+    ## ── Column specification ────────────────────────────────────────────────────────────────────────────────
     ## Delimiter: ","
     ## dbl (15): questid2, age2, mr30est, catag6, newrace2, irmjage, mjrec, mrjmon,...
     ## 
@@ -64,8 +64,7 @@ info_scatterplot = info_scatter %>%
 info_scatterplot                                 
 ```
 
-    ## `geom_smooth()` using method = 'loess' and
-    ## formula = 'y ~ x'
+    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
 ![](Graph_Joyce_files/figure-gfm/scatter%20plot-1.png)<!-- -->
 
