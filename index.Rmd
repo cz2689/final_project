@@ -48,8 +48,7 @@ In the "[Descriptive Info](https://cz2689.github.io/final_project/Descriptive_In
   * Age when pwople first started using marijuana
   * Depression prevalence pattern
 
-In the "[Mapping](https://cz2689.github.io/final_project/mapping.html)" section, you can find:
-Note: Similiar information can also be found in "[Dashboard](https://cz2689.github.io/final_project/Dashboard.html)".
+In the "[Dashboard](https://cz2689.github.io/final_project/Dashboard.html)" section, you can find:
 
   * Mapping marijuana legalization
   * Marijuana legalization year
