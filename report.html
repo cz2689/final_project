@@ -378,16 +378,84 @@ div.tocify {
 
 <div id="motivation-alice" class="section level2">
 <h2>Motivation (Alice)</h2>
+<p>There are around 48 million people in US using marijuana, and it
+could lead to various health impacts. As more and more states legalize
+marijuana, marijuana use has been causing significant social impacts and
+attracting a vast amount of public attention. The legality of marijuana
+use remains controversial in the US. Each state has their own
+restrictions on their marijuana laws for both medical and recreational
+purposes. Based on data from the “World Population Review,” by July
+2022, 14 states have fully legalized the use of marijuana. In this
+project, we will evaluate the association among marijuana use and
+depression, and we would like to propose recommendations for future
+studies and policies. <br></p>
 </div>
 <div id="research-question-a" class="section level2">
 <h2>Research Question (A)</h2>
+<p>In this project, we aim to:</p>
+<ul>
+<li>understand the association between marijuana use and mental health
+burdens, using 2019 NSDUH</li>
+<li>stratify or adjust for wide a range of demographic and
+sociodemographic variables</li>
+<li>provide suggestions on marijuana legalization for future substance
+prevention programs and policymakers</li>
+</ul>
 </div>
 <div id="data-process-and-cleaning" class="section level2">
 <h2>Data Process AND Cleaning</h2>
-<ol style="list-style-type: lower-alpha">
-<li>nsduh: source + used variabels. (A)</li>
-<li>mapping (Joyce)</li>
-</ol>
+<div id="nsduh" class="section level3">
+<h3><strong>NSDUH</strong></h3>
+<p>To study the association between marijuana use and mental health, we
+used data from the 2019 National Survey on Drug Use and Health (<a
+href="https://nsduhweb.rti.org/respweb/homepage.cfm">NSDUH</a>). This
+nationwide study is sponsored by the Center for Behavioral Health
+Statistics and Quality within the Substance Abuse and Mental Services
+Administration (SAMHSA) and is performed annually. It collects
+up-to-date information on tobacco, alcohol, drug use, mental health and
+other health-related issues in the general population in the US. Every
+year, NSDUH interviews approximately 70,000 people aged 12 and older.
+<br></p>
+<p>We picked the 2019 NSDUH, since it is the newest published version
+besides the 2020 data. Due to the COVID-19 pandemic, SAMHSA suspended
+in-person data collection on the 2020 NSDUH on March 16, 2020. For the
+purpose of data collection, a small-scale in-person data collection was
+conducted in selected counties of two states from July 16 to July 22,
+2020, with approval. Also, on September 11, 2020, SAMHSA approved a
+web-based survey. As NSDUH claimed, in-person and web-based data
+collections yielded differences in response and non-response patterns.
+Consequently, we highly question the representativity of the 2020 data.
+<strong>We believe the 2019 data can give us a more accurate and
+comprehensive idea about the prevalence and association between
+marijuana use and mental health.</strong> <br></p>
+<p>For the process of data cleaning, first, we defined our marijuana
+users as people who used marijuana in the past 30 days, since the
+duration, frequency, and dose of marijuana use are highly related to
+mental health. Then, we selected the variables that we wound to focused
+in this project:</p>
+<ul>
+<li><code>age2</code>: age categories</li>
+<li><code>mjrec</code>: time-since-last-aarijuana-sse</li>
+<li><code>mr30est</code>: marijuana frequency last month</li>
+<li><code>coutyp4</code>: county metro/nonmetro status</li>
+<li><code>irmjage</code>: marijuana age of first use</li>
+<li><code>amdeyr</code>: past year major depressive episode for
+adult</li>
+<li><code>ymdeyr</code>: past year major depressive episode for
+youth</li>
+<li><code>irsex</code>: gender</li>
+<li><code>newrace2</code>: race</li>
+<li><code>eduhighcat</code>: education level</li>
+<li><code>income</code>: income level</li>
+<li><code>irmarit</code>: marital status</li>
+</ul>
+<p>Finally, we filtered out all the missing values. More detailed data
+manipulation for each visualization graphs can be found in the
+<strong>EDA</strong> section.</p>
+</div>
+<div id="mapping-joyce" class="section level3">
+<h3><strong>Mapping (Joyce)</strong></h3>
+</div>
 </div>
 <div id="eda-fengdi" class="section level2">
 <h2>EDA (Fengdi)</h2>
@@ -519,19 +587,19 @@ the survey in different age groups.</p>
 <tbody>
 <tr class="odd">
 <td align="left">12 - 15</td>
-<td align="right">101</td>
+<td align="right">81</td>
 </tr>
 <tr class="even">
 <td align="left">16 - 19</td>
-<td align="right">490</td>
+<td align="right">447</td>
 </tr>
 <tr class="odd">
 <td align="left">20 - 25</td>
-<td align="right">286</td>
+<td align="right">265</td>
 </tr>
 <tr class="even">
 <td align="left">26 - 29</td>
-<td align="right">44</td>
+<td align="right">41</td>
 </tr>
 <tr class="odd">
 <td align="left">30 - 34</td>
@@ -539,11 +607,11 @@ the survey in different age groups.</p>
 </tr>
 <tr class="even">
 <td align="left">35 - 49</td>
-<td align="right">70</td>
+<td align="right">61</td>
 </tr>
 <tr class="odd">
 <td align="left">50 - 64</td>
-<td align="right">36</td>
+<td align="right">28</td>
 </tr>
 <tr class="even">
 <td align="left">older_than_65</td>
@@ -666,7 +734,7 @@ non-metro and the small-metro area than the large-metro area.</p>
 <p><img src="report_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 </div>
-<div id="mapping-joyce" class="section level2">
+<div id="mapping-joyce-1" class="section level2">
 <h2>Mapping (Joyce)</h2>
 </div>
 <div id="statistical-analysis-joe" class="section level2">
