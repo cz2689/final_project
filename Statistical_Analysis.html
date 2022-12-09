@@ -383,10 +383,14 @@ div.tocify {
 </div>
 
 
-<div id="prevalence-of-depression-by-sociodemographic-characteristcs"
+<div id="depression-by-sociodemographic-characteristcs"
 class="section level2">
-<h2>Prevalence of depression by sociodemographic characteristcs</h2>
-<p>Below is a table showing percent of youth depression.</p>
+<h2>Depression by sociodemographic characteristcs</h2>
+<div id="youths-12---17-years-old" class="section level3">
+<h3>Youths (12 - 17 years old)</h3>
+<ol style="list-style-type: decimal">
+<li>Youth depression by age category:</li>
+</ol>
 <pre class="r"><code>data %&gt;% 
   select(catag6, ymdeyr) %&gt;% 
   drop_na(ymdeyr) %&gt;% 
@@ -416,54 +420,13 @@ class="section level2">
 </tr>
 </tbody>
 </table>
-<p>Below is a table showing percent of adult depression among each age
-categories.</p>
-<pre class="r"><code>data %&gt;% 
-  select(catag6, amdeyr) %&gt;% 
-  drop_na(amdeyr) %&gt;% 
-  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
-         catag6 = recode(catag6, &quot;1&quot; = &quot;12-17 years old&quot;,
-                         &quot;2&quot; = &quot;18-25 years old&quot;,
-                         &quot;3&quot; = &quot;26-34 years old&quot;,
-                         &quot;4&quot; = &quot;35-49 years old&quot;,
-                         &quot;5&quot; = &quot;50-64 years old&quot;,
-                         &quot;6&quot; = &quot;65+ years old&quot;
-                         )) %&gt;% 
-  group_by(catag6) %&gt;% 
-  summarise(
-    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
-  knitr::kable(digits = 2)</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">catag6</th>
-<th align="right">prevalence_of_past_year_depression</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">18-25 years old</td>
-<td align="right">15.47</td>
-</tr>
-<tr class="even">
-<td align="left">26-34 years old</td>
-<td align="right">10.99</td>
-</tr>
-<tr class="odd">
-<td align="left">35-49 years old</td>
-<td align="right">8.51</td>
-</tr>
-<tr class="even">
-<td align="left">50-64 years old</td>
-<td align="right">6.21</td>
-</tr>
-<tr class="odd">
-<td align="left">65+ years old</td>
-<td align="right">3.43</td>
-</tr>
-</tbody>
-</table>
-<p>Below is a table showing percent of youth depression by gender.</p>
+<ul>
+<li>The prevalence of past year major depressive episode for youth is
+16.2%.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Youth depression by gender:</li>
+</ol>
 <pre class="r"><code>data %&gt;% 
   select(irsex, ymdeyr) %&gt;% 
   drop_na(ymdeyr) %&gt;% 
@@ -492,36 +455,15 @@ categories.</p>
 </tr>
 </tbody>
 </table>
-<p>Below is a table showing percent of adult depression by gender.</p>
-<pre class="r"><code>data %&gt;% 
-  select(irsex, amdeyr) %&gt;% 
-  drop_na(amdeyr) %&gt;% 
-  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
-         irsex = recode(irsex, &quot;1&quot; = &quot;Male&quot;,
-                         &quot;2&quot; = &quot;Female&quot;)) %&gt;% 
-  group_by(irsex) %&gt;% 
-  summarise(
-    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
-  knitr::kable(digits = 2)</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">irsex</th>
-<th align="right">prevalence_of_past_year_depression</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Female</td>
-<td align="right">12.99</td>
-</tr>
-<tr class="even">
-<td align="left">Male</td>
-<td align="right">7.84</td>
-</tr>
-</tbody>
-</table>
-<p>Below is a table showing percent of youth depression by race.</p>
+<ul>
+<li>The prevalence of past year major depressive episode for youth is
+highest among female.</li>
+<li>Female youth depression is more than twofold of male youth
+depression.</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Youth depression by race:</li>
+</ol>
 <pre class="r"><code>data %&gt;% 
   select(newrace2, ymdeyr) %&gt;% 
   drop_na(ymdeyr) %&gt;% 
@@ -576,7 +518,154 @@ categories.</p>
 </tr>
 </tbody>
 </table>
-<p>Below is a table showing percent of adult depression by race.</p>
+<ul>
+<li>The prevalence of past year major depressive episode for youth is
+highest among those who identified them to have more than one race.</li>
+<li>The lowest is among Non-Hispanic Black.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Youth depression by family income:</li>
+</ol>
+<pre class="r"><code>data %&gt;% 
+  select(income, ymdeyr) %&gt;% 
+  drop_na(ymdeyr) %&gt;% 
+  mutate(ymdeyr = ifelse(ymdeyr == 2, 0, 1),
+         income = recode(income, &quot;1&quot; = &quot;Less than $20,000&quot;,
+                         &quot;2&quot; = &quot;$20,000 - $49,999&quot;,
+                         &quot;3&quot; = &quot;$50,000 - $74,999&quot;,
+                         &quot;4&quot; = &quot;$75,000 or More&quot;
+                         )) %&gt;% 
+  group_by(income) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">income</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">$20,000 - $49,999</td>
+<td align="right">16.03</td>
+</tr>
+<tr class="even">
+<td align="left">$50,000 - $74,999</td>
+<td align="right">19.37</td>
+</tr>
+<tr class="odd">
+<td align="left">$75,000 or More</td>
+<td align="right">15.36</td>
+</tr>
+<tr class="even">
+<td align="left">Less than $20,000</td>
+<td align="right">15.68</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The prevalence of past year major depressive episode for youth is
+highest among those with total family income range $50,000 -
+$74,999.</li>
+</ul>
+</div>
+<div id="adults-18-years-old" class="section level3">
+<h3>Adults (18 + years old)</h3>
+<ol style="list-style-type: decimal">
+<li>Adult depression by age categories:</li>
+</ol>
+<pre class="r"><code>data %&gt;% 
+  select(catag6, amdeyr) %&gt;% 
+  drop_na(amdeyr) %&gt;% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         catag6 = recode(catag6, &quot;1&quot; = &quot;12-17 years old&quot;,
+                         &quot;2&quot; = &quot;18-25 years old&quot;,
+                         &quot;3&quot; = &quot;26-34 years old&quot;,
+                         &quot;4&quot; = &quot;35-49 years old&quot;,
+                         &quot;5&quot; = &quot;50-64 years old&quot;,
+                         &quot;6&quot; = &quot;65+ years old&quot;
+                         )) %&gt;% 
+  group_by(catag6) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">catag6</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">18-25 years old</td>
+<td align="right">15.47</td>
+</tr>
+<tr class="even">
+<td align="left">26-34 years old</td>
+<td align="right">10.99</td>
+</tr>
+<tr class="odd">
+<td align="left">35-49 years old</td>
+<td align="right">8.51</td>
+</tr>
+<tr class="even">
+<td align="left">50-64 years old</td>
+<td align="right">6.21</td>
+</tr>
+<tr class="odd">
+<td align="left">65+ years old</td>
+<td align="right">3.43</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The highest prevalence of past year major depressive episode for
+adult is among those aged 18 - 25 years old.<br />
+</li>
+<li>And the prevalence decreases with age.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Adult depression by gender:</li>
+</ol>
+<pre class="r"><code>data %&gt;% 
+  select(irsex, amdeyr) %&gt;% 
+  drop_na(amdeyr) %&gt;% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         irsex = recode(irsex, &quot;1&quot; = &quot;Male&quot;,
+                         &quot;2&quot; = &quot;Female&quot;)) %&gt;% 
+  group_by(irsex) %&gt;% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">irsex</th>
+<th align="right">prevalence_of_past_year_depression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Female</td>
+<td align="right">12.99</td>
+</tr>
+<tr class="even">
+<td align="left">Male</td>
+<td align="right">7.84</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The prevalence of past year major depressive episode for adult is
+also highest among female. However, the difference is not as large as
+that of the youth.</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Adult depression by race:</li>
+</ol>
 <pre class="r"><code>data %&gt;% 
   select(newrace2, amdeyr) %&gt;% 
   drop_na(amdeyr) %&gt;% 
@@ -631,9 +720,15 @@ categories.</p>
 </tr>
 </tbody>
 </table>
-<p>Below is a table showing percent of adult depression by education
-level.<br />
-We are not considering youth education in this case.</p>
+<ul>
+<li>The prevalence of past year major depressive episode for adult is
+highest among those who identified them to have more than one race.</li>
+<li>The lowest is among Non-Hispanic Native Hawiian.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Adult depression by education: (We are not considering youth
+education in this case.)</li>
+</ol>
 <pre class="r"><code>data %&gt;% 
   select(eduhighcat, amdeyr) %&gt;% 
   drop_na(amdeyr) %&gt;% 
@@ -673,49 +768,13 @@ We are not considering youth education in this case.</p>
 </tr>
 </tbody>
 </table>
-<p>Below is a table showing percent of youth depression by family
-income.</p>
-<pre class="r"><code>data %&gt;% 
-  select(income, ymdeyr) %&gt;% 
-  drop_na(ymdeyr) %&gt;% 
-  mutate(ymdeyr = ifelse(ymdeyr == 2, 0, 1),
-         income = recode(income, &quot;1&quot; = &quot;Less than $20,000&quot;,
-                         &quot;2&quot; = &quot;$20,000 - $49,999&quot;,
-                         &quot;3&quot; = &quot;$50,000 - $74,999&quot;,
-                         &quot;4&quot; = &quot;$75,000 or More&quot;
-                         )) %&gt;% 
-  group_by(income) %&gt;% 
-  summarise(
-    prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %&gt;% 
-  knitr::kable(digits = 2)</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">income</th>
-<th align="right">prevalence_of_past_year_depression</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">$20,000 - $49,999</td>
-<td align="right">16.03</td>
-</tr>
-<tr class="even">
-<td align="left">$50,000 - $74,999</td>
-<td align="right">19.37</td>
-</tr>
-<tr class="odd">
-<td align="left">$75,000 or More</td>
-<td align="right">15.36</td>
-</tr>
-<tr class="even">
-<td align="left">Less than $20,000</td>
-<td align="right">15.68</td>
-</tr>
-</tbody>
-</table>
-<p>Below is a table showing percent of adult depression by family
-income.</p>
+<ul>
+<li>The prevalence of past year major depressive episode for adult is
+highest among those with some college degrees.</li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
+<li>Adult depression by family income:</li>
+</ol>
 <pre class="r"><code>data %&gt;% 
   select(income, amdeyr) %&gt;% 
   drop_na(amdeyr) %&gt;% 
@@ -755,8 +814,14 @@ income.</p>
 </tr>
 </tbody>
 </table>
-<p>Below is a table showing percent of adult depression by marital
-status.</p>
+<ul>
+<li>The prevalence of past year major depressive episode for adult is
+highest among those with total family income range less than
+$20,000.</li>
+</ul>
+<ol start="6" style="list-style-type: decimal">
+<li>Adult depression by marital status:</li>
+</ol>
 <pre class="r"><code>data %&gt;% 
   select(irmarit, amdeyr) %&gt;% 
   drop_na(amdeyr) %&gt;% 
@@ -796,15 +861,25 @@ status.</p>
 </tr>
 </tbody>
 </table>
+<ul>
+<li>The prevalence of past year major depressive episode for adult is
+highest among who have never been married.</li>
+<li>And is lowest among those who is married.</li>
+</ul>
 </div>
-<div id="logistic-regression-youths-12---17-years-old"
+</div>
+<div id="logistic-regression-and-hypothesis-testing"
 class="section level2">
-<h2>Logistic regression — Youths (12 - 17 years old)</h2>
-<p>We perform a logistic regression on our outcome and exposure on
+<h2>Logistic regression and Hypothesis testing</h2>
+<div id="youths-12---17-years-old-1" class="section level3">
+<h3>Youths (12 - 17 years old)</h3>
+<ol style="list-style-type: decimal">
+<li>We perform a logistic regression on our outcome and exposure on
 youths while adjusting for other covariates.<br />
 ymdeyr (youth depression) = mrjmon (Past month marijuana Use) + catag6
 (age) + irsex (sex) + newrace2 (race) + coutyp4 (region)<br />
-And the resulting odds ratio is shown below:</p>
+And the resulting odds ratio is shown below:</li>
+</ol>
 <pre class="r"><code>reg %&gt;% 
   glm(ymdeyr ~ mrjmon + catag6 + irsex + newrace2 + coutyp4, data = ., family = binomial()) %&gt;% 
   broom::tidy() %&gt;% 
@@ -833,16 +908,16 @@ And the resulting odds ratio is shown below:</p>
 </tr>
 </tbody>
 </table>
-<p>The odds of depression is 2.673 (95% CI: 2.309 - 3.093) comparing
+<ul>
+<li>The odds of depression is 2.673 (95% CI: 2.309 - 3.093) comparing
 youth who used cannabis in the past month to those who do not adjusting
-for age, sex, race, region.</p>
-</div>
-<div id="hypothesis-testing-youths-12---17-years-old"
-class="section level2">
-<h2>Hypothesis testing — Youths (12 - 17 years old)</h2>
-<p>Is the beta for our exposure variable truly different from
+for age, sex, race, region.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Is the beta for our exposure variable truly different from
 zero?<br />
-We obtained the p.value from the t.test statistics.</p>
+We obtained the p.value from the t.test statistics.</li>
+</ol>
 <pre class="r"><code>reg %&gt;% 
   glm(ymdeyr ~ mrjmon + catag6 + irsex + newrace2 + coutyp4, data = ., family = binomial()) %&gt;% 
   broom::tidy() %&gt;% 
@@ -865,20 +940,23 @@ We obtained the p.value from the t.test statistics.</p>
 </tr>
 </tbody>
 </table>
-<p>As we can see that the t-tests statistic for the term
+<ul>
+<li>As we can see that the t-tests statistic for the term
 <code>mrjmon1</code> which is marijuana past month use comparing Yes to
 No is very large and the resulting p.value is close to zero. Our beta
-coefficient of the exposure variable is significant.</p>
+coefficient of the exposure variable is significant.</li>
+</ul>
 </div>
-<div id="logistic-regression-adults-18-years-old"
-class="section level2">
-<h2>Logistic regression — Adults (18 + years old)</h2>
-<p>We perform a logistic regression on our outcome and exposure on
+<div id="adults-18-years-old-1" class="section level3">
+<h3>Adults (18 + years old)</h3>
+<ol style="list-style-type: decimal">
+<li>We perform a logistic regression on our outcome and exposure on
 adults while adjusting for other covariates.<br />
 amdeyr (adult depression) = mrjmon (Past month marijuana Use) + catag6
 (age) + irsex (sex) + newrace2 (race) + eduhighcat (education) + coutyp4
 (region) + income (income) + irmarit (martial status)<br />
-And the resulting odds ratio is shown below:</p>
+And the resulting odds ratio is shown below:</li>
+</ol>
 <pre class="r"><code>reg %&gt;% 
   glm(amdeyr ~ mrjmon + catag6 + irsex + newrace2 + eduhighcat + coutyp4 + income + irmarit, data = ., family = binomial()) %&gt;% 
   broom::tidy() %&gt;% 
@@ -907,15 +985,16 @@ And the resulting odds ratio is shown below:</p>
 </tr>
 </tbody>
 </table>
-<p>The odds of depression is 1.935 (95% CI: 1.795 - 2.086) comparing
+<ul>
+<li>The odds of depression is 1.935 (95% CI: 1.795 - 2.086) comparing
 adults who used cannabis in the past month to those who do not adjusting
-for age, sex, race, education, region, income, and martial status.</p>
-</div>
-<div id="hypothesis-testing-adults-18-years-old" class="section level2">
-<h2>Hypothesis testing — Adults (18 + years old)</h2>
-<p>Is the beta for our exposure variable truly different from
+for age, sex, race, education, region, income, and martial status.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Is the beta for our exposure variable truly different from
 zero?<br />
-We obtained the p.value from the t.test statistics.</p>
+We obtained the p.value from the t.test statistics.</li>
+</ol>
 <pre class="r"><code>reg %&gt;% 
   glm(amdeyr ~ mrjmon + catag6 + irsex + newrace2 + eduhighcat + coutyp4 + income + irmarit, data = ., family = binomial()) %&gt;% 
   broom::tidy() %&gt;% 
@@ -938,10 +1017,40 @@ We obtained the p.value from the t.test statistics.</p>
 </tr>
 </tbody>
 </table>
-<p>As we can see that the t-tests statistic for the term
+<ul>
+<li>As we can see that the t-tests statistic for the term
 <code>mrjmon1</code> which is marijuana past month use comparing Yes to
 No is very large and the resulting p.value is close to zero. Our beta
-coefficient of the exposure variable is significant.</p>
+coefficient of the exposure variable is significant.</li>
+</ul>
+</div>
+</div>
+<div id="finding-summary" class="section level2">
+<h2>Finding &amp; Summary</h2>
+<ul>
+<li>Depression was distributed unevenly across a wide range of
+sociodemographic variables.</li>
+<li>The prevalence of youth depression was higher among female. It is
+also true for adults.</li>
+<li>Depression seems to be decreasing with age. The highest prevalence
+is among those who is youngest.<br />
+</li>
+<li>Depression is more prevalent for adults with family income less than
+$20,000 annually and who have never been married.</li>
+<li>People who identified them to have more than one race have the
+highest prevalence of depression among all the race categories for both
+youth and adults.<br />
+</li>
+<li>Depression was significantly more common among those who reported
+marijuana use in the past month for both youths and adults, adjusting
+for demographic factors.</li>
+<li>The odds of depression is 2.673 (95% CI: 2.309 - 3.093) comparing
+youth who used cannabis in the past month to those who do not adjusting
+for age, sex, race, region.</li>
+<li>The odds of depression is 1.935 (95% CI: 1.795 - 2.086) comparing
+adults who used cannabis in the past month to those who do not adjusting
+for age, sex, race, education, region, income, and martial status.</li>
+</ul>
 </div>
 
 

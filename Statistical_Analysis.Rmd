@@ -29,8 +29,9 @@ reg = data %>%
          )
 ```
 
-## Prevalence of depression by sociodemographic characteristcs
-Below is a table showing percent of youth depression. 
+## Depression by sociodemographic characteristcs
+### Youths (12 - 17 years old)
+1. Youth depression by age category: 
 ```{r}
 data %>% 
   select(catag6, ymdeyr) %>% 
@@ -48,27 +49,10 @@ data %>%
     prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %>% 
   knitr::kable(digits = 2)
 ```
+* The prevalence of past year major depressive episode for youth is 16.2%.   
+ 
 
-Below is a table showing percent of adult depression among each age categories. 
-```{r}
-data %>% 
-  select(catag6, amdeyr) %>% 
-  drop_na(amdeyr) %>% 
-  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
-         catag6 = recode(catag6, "1" = "12-17 years old",
-                         "2" = "18-25 years old",
-                         "3" = "26-34 years old",
-                         "4" = "35-49 years old",
-                         "5" = "50-64 years old",
-                         "6" = "65+ years old"
-                         )) %>% 
-  group_by(catag6) %>% 
-  summarise(
-    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
-  knitr::kable(digits = 2)
-```
-
-Below is a table showing percent of youth depression by gender. 
+2. Youth depression by gender: 
 ```{r}
 data %>% 
   select(irsex, ymdeyr) %>% 
@@ -81,22 +65,10 @@ data %>%
     prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %>% 
   knitr::kable(digits = 2)
 ```
+* The prevalence of past year major depressive episode for youth is highest among female.
+* Female youth depression is more than twofold of male youth depression.
 
-Below is a table showing percent of adult depression by gender. 
-```{r}
-data %>% 
-  select(irsex, amdeyr) %>% 
-  drop_na(amdeyr) %>% 
-  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
-         irsex = recode(irsex, "1" = "Male",
-                         "2" = "Female")) %>% 
-  group_by(irsex) %>% 
-  summarise(
-    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
-  knitr::kable(digits = 2)
-```
-
-Below is a table showing percent of youth depression by race. 
+3. Youth depression by race:
 ```{r}
 data %>% 
   select(newrace2, ymdeyr) %>% 
@@ -115,8 +87,71 @@ data %>%
     prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %>% 
   knitr::kable(digits = 2)
 ```
+* The prevalence of past year major depressive episode for youth is highest among those who identified them to have more than one race. 
+* The lowest is among Non-Hispanic Black. 
 
-Below is a table showing percent of adult depression by race. 
+
+4. Youth depression by family income:  
+```{r}
+data %>% 
+  select(income, ymdeyr) %>% 
+  drop_na(ymdeyr) %>% 
+  mutate(ymdeyr = ifelse(ymdeyr == 2, 0, 1),
+         income = recode(income, "1" = "Less than $20,000",
+                         "2" = "$20,000 - $49,999",
+                         "3" = "$50,000 - $74,999",
+                         "4" = "$75,000 or More"
+                         )) %>% 
+  group_by(income) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+* The prevalence of past year major depressive episode for youth is highest among those with total family income range $50,000 - $74,999.
+
+
+### Adults (18 + years old)
+1. Adult depression by age categories: 
+```{r}
+data %>% 
+  select(catag6, amdeyr) %>% 
+  drop_na(amdeyr) %>% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         catag6 = recode(catag6, "1" = "12-17 years old",
+                         "2" = "18-25 years old",
+                         "3" = "26-34 years old",
+                         "4" = "35-49 years old",
+                         "5" = "50-64 years old",
+                         "6" = "65+ years old"
+                         )) %>% 
+  group_by(catag6) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+* The highest prevalence of past year major depressive episode for adult is among those aged 18 - 25 years old.  
+* And the prevalence decreases with age.
+  
+ 
+
+2. Adult depression by gender:
+```{r}
+data %>% 
+  select(irsex, amdeyr) %>% 
+  drop_na(amdeyr) %>% 
+  mutate(amdeyr = ifelse(amdeyr == 2, 0, 1),
+         irsex = recode(irsex, "1" = "Male",
+                         "2" = "Female")) %>% 
+  group_by(irsex) %>% 
+  summarise(
+    prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
+  knitr::kable(digits = 2)
+```
+* The prevalence of past year major depressive episode for adult is also highest among female. However, the difference is not as large as that of the youth. 
+  
+
+
+3. Adult depression by race:
 ```{r}
 data %>% 
   select(newrace2, amdeyr) %>% 
@@ -135,9 +170,12 @@ data %>%
     prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
   knitr::kable(digits = 2)
 ```
+* The prevalence of past year major depressive episode for adult is highest among those who identified them to have more than one race. 
+* The lowest is among Non-Hispanic Native Hawiian. 
+ 
 
-Below is a table showing percent of adult depression by education level.  
-We are not considering youth education in this case. 
+4. Adult depression by education:
+(We are not considering youth education in this case.)
 ```{r}
 data %>% 
   select(eduhighcat, amdeyr) %>% 
@@ -153,25 +191,11 @@ data %>%
     prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
   knitr::kable(digits = 2)
 ```
+* The prevalence of past year major depressive episode for adult is highest among those with some college degrees.
+ 
 
-Below is a table showing percent of youth depression by family income.  
-```{r}
-data %>% 
-  select(income, ymdeyr) %>% 
-  drop_na(ymdeyr) %>% 
-  mutate(ymdeyr = ifelse(ymdeyr == 2, 0, 1),
-         income = recode(income, "1" = "Less than $20,000",
-                         "2" = "$20,000 - $49,999",
-                         "3" = "$50,000 - $74,999",
-                         "4" = "$75,000 or More"
-                         )) %>% 
-  group_by(income) %>% 
-  summarise(
-    prevalence_of_past_year_depression = sum(ymdeyr, na.rm = TRUE) / n() * 100) %>% 
-  knitr::kable(digits = 2)
-```
 
-Below is a table showing percent of adult depression by family income.  
+5. Adult depression by family income:  
 ```{r}
 data %>% 
   select(income, amdeyr) %>% 
@@ -187,8 +211,10 @@ data %>%
     prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
   knitr::kable(digits = 2)
 ```
+* The prevalence of past year major depressive episode for adult is highest among those with total family income range less than $20,000. 
+ 
 
-Below is a table showing percent of adult depression by marital status.  
+6. Adult depression by marital status:  
 ```{r}
 data %>% 
   select(irmarit, amdeyr) %>% 
@@ -204,9 +230,13 @@ data %>%
     prevalence_of_past_year_depression = sum(amdeyr, na.rm = TRUE) / n() * 100) %>% 
   knitr::kable(digits = 2)
 ```
+* The prevalence of past year major depressive episode for adult is highest among who have never been married. 
+* And is lowest among those who is married. 
+ 
 
-## Logistic regression --- Youths (12 - 17 years old)
-We perform a logistic regression on our outcome and exposure on youths while adjusting for other covariates.  
+## Logistic regression and Hypothesis testing
+### Youths (12 - 17 years old)  
+1. We perform a logistic regression on our outcome and exposure on youths while adjusting for other covariates.  
 ymdeyr (youth depression) = mrjmon (Past month marijuana Use) + catag6 (age) + irsex (sex) + newrace2 (race) + coutyp4 (region)  
 And the resulting odds ratio is shown below:
 ```{r}
@@ -221,11 +251,10 @@ reg %>%
   select(term, OR, conf.low, conf.high) %>% 
   knitr::kable(digits = 3)
 ```
-The odds of depression is 2.673 (95% CI: 2.309 - 3.093) comparing youth who used cannabis in the past month to those who do not adjusting for age, sex, race, region. 
+* The odds of depression is 2.673 (95% CI: 2.309 - 3.093) comparing youth who used cannabis in the past month to those who do not adjusting for age, sex, race, region. 
+ 
 
-
-## Hypothesis testing --- Youths (12 - 17 years old)
-Is the beta for our exposure variable truly different from zero?  
+2. Is the beta for our exposure variable truly different from zero?  
 We obtained the p.value from the t.test statistics.
 ```{r}
 reg %>% 
@@ -235,11 +264,12 @@ reg %>%
   select(term, statistic, p.value) %>% 
   knitr::kable(digits = 4)
 ```
-As we can see that the t-tests statistic for the term `mrjmon1` which is marijuana past month use comparing Yes to No is very large and the resulting p.value is close to zero. Our beta coefficient of the exposure variable is significant. 
+* As we can see that the t-tests statistic for the term `mrjmon1` which is marijuana past month use comparing Yes to No is very large and the resulting p.value is close to zero. Our beta coefficient of the exposure variable is significant. 
+ 
 
 
-## Logistic regression --- Adults (18 + years old)
-We perform a logistic regression on our outcome and exposure on adults while adjusting for other covariates.  
+### Adults (18 + years old)
+1. We perform a logistic regression on our outcome and exposure on adults while adjusting for other covariates.  
 amdeyr (adult depression) = mrjmon (Past month marijuana Use) + catag6 (age) + irsex (sex) + newrace2 (race)  + eduhighcat (education) + coutyp4 (region) + income (income) + irmarit (martial status)  
 And the resulting odds ratio is shown below:
 ```{r}
@@ -254,11 +284,10 @@ reg %>%
   select(term, OR, conf.low, conf.high) %>% 
   knitr::kable(digits = 3)
 ```
-The odds of depression is 1.935 (95% CI: 1.795 - 2.086) comparing adults who used cannabis in the past month to those who do not adjusting for age, sex, race, education, region, income, and martial status. 
+* The odds of depression is 1.935 (95% CI: 1.795 - 2.086) comparing adults who used cannabis in the past month to those who do not adjusting for age, sex, race, education, region, income, and martial status. 
 
 
-## Hypothesis testing --- Adults (18 + years old)
-Is the beta for our exposure variable truly different from zero?  
+2. Is the beta for our exposure variable truly different from zero?  
 We obtained the p.value from the t.test statistics.
 ```{r}
 reg %>% 
@@ -268,11 +297,17 @@ reg %>%
   select(term, statistic, p.value) %>% 
   knitr::kable(digits = 4)
 ```
-As we can see that the t-tests statistic for the term `mrjmon1` which is marijuana past month use comparing Yes to No is very large and the resulting p.value is close to zero. Our beta coefficient of the exposure variable is significant. 
+* As we can see that the t-tests statistic for the term `mrjmon1` which is marijuana past month use comparing Yes to No is very large and the resulting p.value is close to zero. Our beta coefficient of the exposure variable is significant. 
 
-
-
-
+## Finding & Summary
+* Depression was distributed unevenly across a wide range of sociodemographic variables.
+* The prevalence of youth depression was higher among female. It is also true for adults. 
+* Depression seems to be decreasing with age. The highest prevalence is among those who is youngest.  
+* Depression is more prevalent for adults with family income less than $20,000 annually and who have never been married. 
+* People who identified them to have more than one race have the highest prevalence of depression among all the race categories for both youth and adults.   
+* Depression was significantly more common among those who reported marijuana use in the past month for both youths and adults, adjusting for demographic factors. 
+* The odds of depression is 2.673 (95% CI: 2.309 - 3.093) comparing youth who used cannabis in the past month to those who do not adjusting for age, sex, race, region. 
+* The odds of depression is 1.935 (95% CI: 1.795 - 2.086) comparing adults who used cannabis in the past month to those who do not adjusting for age, sex, race, education, region, income, and martial status.
 
 
 
