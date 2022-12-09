@@ -18,9 +18,8 @@ library(dplyr)
 library(usmap)
 library(ggplot2)
 require(maps)
-library(ggrepel)
 library(plotly)
-library(widgetframe)
+
 ```
 
 ### Where marijuana is legal in the United States?
@@ -78,6 +77,27 @@ plot_usmap(regions = "states", data=mapping_df, values = "status")+
   labs(title = "Where marijuana is legal in the United States")
 ```
 
+
+```{r, echo=FALSE, eval=FALSE}
+library(ggiraph)
+
+ggplot(mapping_df) +
+  geom_sf_interactive(
+    aes(fill = status,
+        tooltip = sprintf("%s<br/>%s", Year_legalized_REC, Year_legalized_MED))) +
+  theme_wsj(color = "white", base_family = "mono") + 
+  ggtitle("Places I've been to") +
+  scale_fill_manual(breaks = c("Recreational/Medical", "Medical", "None"), 
+                      labels=c("Recreational/Medical", "Medical", "None")) +
+  guides(fill=guide_legend(title=NULL))
+
+x <- girafe(ggobj = gg)
+x <- girafe_options(x,
+                    opts_zoom(min = 0.7, max = 2) )
+if( interactive() ) print(x)
+```
+
+
 ```{r, warning = FALSE}
 ggplotly(map) %>%
   highlight("plotly_hover", selected = attrs_selected(line = list(color = "black"))) 
@@ -95,6 +115,11 @@ legalized_states <-
 
 legalized_states
 ```
+
+### How many people could use marijuana legally in 2019?
+
+
+
 
 ### When marijuana legaled in each State?
 
