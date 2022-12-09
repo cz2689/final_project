@@ -13,7 +13,7 @@
 
 <title>Marijuana Use and Depression In the United States</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -184,8 +184,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -193,16 +193,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -509,22 +502,7 @@ the survey in different age groups.</p>
 <tbody>
 <tr class="odd">
 <td align="left">12 - 15</td>
-<<<<<<< HEAD
-<td align="right">79</td>
-</tr>
-<tr class="even">
-<td align="left">16 - 19</td>
-<td align="right">465</td>
-</tr>
-<tr class="odd">
-<td align="left">20 - 25</td>
-<td align="right">269</td>
-</tr>
-<tr class="even">
-<td align="left">26 - 29</td>
-<td align="right">41</td>
-=======
-<td align="right">105</td>
+<td align="right">101</td>
 </tr>
 <tr class="even">
 <td align="left">16 - 19</td>
@@ -532,12 +510,11 @@ the survey in different age groups.</p>
 </tr>
 <tr class="odd">
 <td align="left">20 - 25</td>
-<td align="right">283</td>
+<td align="right">285</td>
 </tr>
 <tr class="even">
 <td align="left">26 - 29</td>
-<td align="right">46</td>
->>>>>>> 746719e35c1a631398918bf4bc633265d9008c62
+<td align="right">44</td>
 </tr>
 <tr class="odd">
 <td align="left">30 - 34</td>
@@ -545,19 +522,11 @@ the survey in different age groups.</p>
 </tr>
 <tr class="even">
 <td align="left">35 - 49</td>
-<<<<<<< HEAD
-<td align="right">61</td>
+<td align="right">69</td>
 </tr>
 <tr class="odd">
 <td align="left">50 - 64</td>
-<td align="right">33</td>
-=======
-<td align="right">72</td>
-</tr>
-<tr class="odd">
-<td align="left">50 - 64</td>
-<td align="right">29</td>
->>>>>>> 746719e35c1a631398918bf4bc633265d9008c62
+<td align="right">31</td>
 </tr>
 <tr class="even">
 <td align="left">older_than_65</td>

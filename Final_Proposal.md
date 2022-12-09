@@ -35,16 +35,16 @@ Our data comes from National survey on Drug Use and Health 2002-2019.
 
 ### The planned analyses / visualizations / coding challenges
 
--   We will run regression on marijuana and a few mental health issue
-    (e.g. depression, suscidal thoughts, schizophrenia, anxiety). And
-    perfrom hypothesis testing.  
--   We will make plots showing the trend of reported marjuana use change
-    over time. And we will have interactive plots showing the current
-    legalization status of U.S. states, such as map showing the legality
-    states of marijuana.  
--   We might have issue with dealing with missing value in terms of
-    analysis our data. In addition, we might have issue of merging data
-    set from different source to create our report.
+- We will run regression on marijuana and a few mental health issue
+  (e.g. depression, suscidal thoughts, schizophrenia, anxiety). And
+  perfrom hypothesis testing.  
+- We will make plots showing the trend of reported marjuana use change
+  over time. And we will have interactive plots showing the current
+  legalization status of U.S. states, such as map showing the legality
+  states of marijuana.  
+- We might have issue with dealing with missing value in terms of
+  analysis our data. In addition, we might have issue of merging data
+  set from different source to create our report.
 
 ### The planned timeline (by the given data, tasks should be finished.)
 

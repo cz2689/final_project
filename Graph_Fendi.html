@@ -15,7 +15,7 @@
 
 <title>Graph</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -182,8 +182,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -191,16 +191,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -309,7 +302,7 @@ $(document).ready(function () {
 #write_csv(nsduh_19, file = &quot;data/nsduh_19.csv&quot;)</code></pre>
 <pre class="r"><code>raw_data = read_csv(&quot;data/nsduh_19.csv&quot;)</code></pre>
 <pre><code>## Rows: 56136 Columns: 15
-## ── Column specification ────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ───────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (15): questid2, age2, mr30est, catag6, newrace2, irmjage, mjrec, mrjmon,...
 ## 
@@ -359,35 +352,19 @@ survey.</p>
 <tbody>
 <tr class="odd">
 <td align="left">12 - 15</td>
-<<<<<<< HEAD
-<td align="right">90.104</td>
+<td align="right">99.878</td>
 </tr>
 <tr class="even">
 <td align="left">16 - 19</td>
-<td align="right">480.923</td>
+<td align="right">490.594</td>
 </tr>
 <tr class="odd">
 <td align="left">20 - 25</td>
-<td align="right">275.722</td>
+<td align="right">285.213</td>
 </tr>
 <tr class="even">
 <td align="left">26 - 29</td>
-<td align="right">43.075</td>
-=======
-<td align="right">98.498</td>
-</tr>
-<tr class="even">
-<td align="left">16 - 19</td>
-<td align="right">480.069</td>
-</tr>
-<tr class="odd">
-<td align="left">20 - 25</td>
-<td align="right">281.710</td>
-</tr>
-<tr class="even">
-<td align="left">26 - 29</td>
-<td align="right">44.764</td>
->>>>>>> 746719e35c1a631398918bf4bc633265d9008c62
+<td align="right">44.106</td>
 </tr>
 <tr class="odd">
 <td align="left">30 - 34</td>
@@ -395,19 +372,11 @@ survey.</p>
 </tr>
 <tr class="even">
 <td align="left">35 - 49</td>
-<<<<<<< HEAD
-<td align="right">64.967</td>
+<td align="right">69.264</td>
 </tr>
 <tr class="odd">
 <td align="left">50 - 64</td>
-<td align="right">34.272</td>
-=======
-<td align="right">69.122</td>
-</tr>
-<tr class="odd">
-<td align="left">50 - 64</td>
-<td align="right">30.404</td>
->>>>>>> 746719e35c1a631398918bf4bc633265d9008c62
+<td align="right">35.754</td>
 </tr>
 <tr class="even">
 <td align="left">older_than_65</td>
