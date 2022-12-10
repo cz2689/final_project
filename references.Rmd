@@ -6,3 +6,13 @@ output:
     toc: true
     toc_float: true
 ---
+Here are some resources we found helpful over the course of our project.
+
+#### **Motivating Article**
+[CDC on Depression](https://www.cdc.gov/tobacco/campaign/tips/diseases/depression-anxiety.html): define depression and related educational information
+
+[Marijuana and Public Health](https://www.cdc.gov/marijuana/index.htm): talks about various aspects of marijuana
+
+
+
+
