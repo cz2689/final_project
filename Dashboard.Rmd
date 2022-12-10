@@ -52,7 +52,7 @@ map = plot_usmap(regions = "states", data=mapping_df, values = "status",color = 
   theme(legend.position = "bottom") +
   labs(title = "Map: Legalized status for marijuana in the United States") +
   theme(plot.caption = element_text(hjust = 0, face= "italic"))+
-   theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5))
 
 map$layers[[2]]$aes_params$size <- 3
 

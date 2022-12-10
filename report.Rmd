@@ -346,12 +346,14 @@ map = plot_usmap(regions = "states", data=mapping_df, values = "status",color = 
   theme(panel.background = element_rect(colour = "black")) +
   scale_fill_manual(values = c(`Recreational/Medical` = "red", `Medical` = "blue", `Illegal` = "grey" ), name = "Legalized states") + 
   theme(legend.position = "bottom") +
-  labs(title = "Where marijuana is legal in the United States")
+  labs(title = "Where marijuana is legal in the United States")+
+  theme(plot.title = element_text(hjust = 0.5))
 
 map$layers[[2]]$aes_params$size <- 3
 
 ggplotly(map) %>%
-  highlight("plotly_hover", selected = attrs_selected(line = list(color = "black"))) 
+  highlight("plotly_hover", selected = attrs_selected(line = list(color = "black"))) %>%
+  layout(legend = list(orientation = "h", x = 0.5, y = -0.2))
 ```
 
 During this subtopic, we joined marijuana legalization data and United States datasets to created a map using `usmap` package. We would like to focus on the legalization status for marijuana use in this part, so we created a map to visualized the result. In this map, different colors filled represent different legalization status in each state. Grey means those states are illegal for marijuana use; Blue means those states are only legal for marijuana medical use; Red means those states are legal for marijuana medicial use and recreational use.
@@ -391,7 +393,8 @@ year_df = mapping_df %>%
 legal_year <- year_df %>%
   plot_ly(x = ~ year, y = ~full, color = ~rec_med, type = "scatter", mode = "markers") %>%
   layout(title = "Legalized year of each state", 
-         yaxis = list(title = "States", tickfont = list(size = 5)), xaxis = list(title = "Legalized year")) #add title in the graph
+         yaxis = list(title = "States", tickfont = list(size = 5)), xaxis = list(title = "Legalized year")) %>%
+  layout(legend = list(orientation = "h", x = 0.5, y = -0.2))
 
 legal_year
 
