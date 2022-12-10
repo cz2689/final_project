@@ -377,7 +377,7 @@ We created a summarized table to show the number of states for each legalization
 <br>
 
 
-### When marijuana legalizeed in each State?
+### When marijuana legalized in each State?
 
 ```{r, warning = FALSE}
 year_df = mapping_df %>%
