@@ -57,10 +57,19 @@ For the process of data cleaning, first, we defined our marijuana users as peopl
   * `irmarit`: marital status
   
 Finally, we filtered out all the missing values. More detailed data manipulation for each visualization graphs can be found in the **EDA** section.
+<br>
 
+### **Mapping**
+To create map and show legalization situation for marijuana use in the United States, we find out the up-to-data data in [MJBizDaily](https://mjbizdaily.com/). MJBizDaily is a website to report Marijuana Business Daily, so we believe data from this website are latest and convincing. In the dataset, it included varibales listed below:  
 
-### **Mapping (Joyce)**
-  
+  * `State`: States' name in the United States
+  * `Recreational`: whether States are legal for marijuana recreational use
+  * `Year_legalized_REC`: Legalization year for marijuana recreational use
+  * `Medical`: whether States are legal for marijuana medical use
+  * `Year_legalized_MED`: Legalization year for marijuana recreational use
+
+<br>
+
 ## EDA  (Fengdi)
   
 ```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
@@ -301,17 +310,18 @@ graph_fendi %>%
 
 
 
-## Mapping (Joyce)
+## Mapping (Joyce)   
+In mapping section, we have three subtopics: where marijuana is legal in the United States, how many states legalized for marijuana use, when marijuana legaled in each State. Our goal is to visualized the marijuana legalization data clearly, which could give our audience a clear concept. At the same time, it is a supporting evidence in our research. 
+
+<br>
 
 ### Where marijuana is legal in the United States?
 
 ```{r, warning = FALSE}
-legal_state = read_csv("data/legalization_state.csv") 
+legal_state_raw = read_csv("data/legalization_state.csv") 
 
-legal_state = legal_state %>% 
-  rename(full = State)
-
-legal_state = legal_state %>%
+legal_state = legal_state_raw %>%
+  rename(full = State) %>%
   mutate(status = case_when(
     Recreational == "Yes" & Medical == "Yes" ~ "Recreational/Medical", #rec/med
     Recreational == "No" & Medical == "Yes" ~ "Medical", #medical legal
@@ -346,7 +356,7 @@ ggplotly(map) %>%
   highlight("plotly_hover", selected = attrs_selected(line = list(color = "black"))) 
 ```
 
-We would like to focus on the legalization status for marijuana use in this part, so we created a map to visualized the result. In this map, different colors filled represent different legalization status in each state. Grey means those states are illegal for marijuana use; Blue means those states are only legal for marijuana medical use; Red means those states are legal for marijuana medicial use and recreational use.
+During this subtopic, we joined marijuana legalization data and United States datasets to created a map using `usmap` package. We would like to focus on the legalization status for marijuana use in this part, so we created a map to visualized the result. In this map, different colors filled represent different legalization status in each state. Grey means those states are illegal for marijuana use; Blue means those states are only legal for marijuana medical use; Red means those states are legal for marijuana medicial use and recreational use.
 
 <br>
 
