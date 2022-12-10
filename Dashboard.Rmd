@@ -50,12 +50,15 @@ map = plot_usmap(regions = "states", data=mapping_df, values = "status",color = 
   theme(panel.background = element_rect(colour = "black")) +
   scale_fill_manual(values = c(`Recreational/Medical` = "red", `Medical` = "blue", `Illegal` = "grey" ), name = "Legalized states") + 
   theme(legend.position = "bottom") +
-  labs(title = "Map: Legalized status for marijuana in the United States")
+  labs(title = "Map: Legalized status for marijuana in the United States") +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"))+
+   theme(plot.title = element_text(hjust = 0.5))
 
 map$layers[[2]]$aes_params$size <- 3
 
 ggplotly(map) %>%
-  highlight("plotly_hover", selected = attrs_selected(line = list(color = "black"))) 
+  highlight("plotly_hover", selected = attrs_selected(line = list(color = "black"))) %>%
+  layout(legend = list(orientation = "h", x = 0.5, y = -0.2))
 
 
 ```
@@ -74,8 +77,9 @@ year_df = mapping_df %>%
 
 legal_year <- year_df %>%
   plot_ly(x = ~ year, y = ~full, color = ~rec_med, type = "scatter", mode = "markers") %>%
-  layout(title = "Legalized year of each state", 
-         yaxis = list(title = "States", tickfont = list(size = 5)), xaxis = list(title = "Legalized year")) #add title in the graph
+  layout(title = "Legalized year of each state",
+         yaxis = list(title = "States", tickfont = list(size = 5)), xaxis = list(title = "Legalized year")) %>%
+  layout(legend = list(orientation = "h", x = 0.5, y = -0.2))
 
 legal_year
 ```
