@@ -389,8 +389,11 @@ legal_year
 
 ```
 
+We created a scatter plot showed legalization year for each state. From this plot, we could see that, before 2002, most of states are fully illegal and a few states are only legal for medicial use. However, after 2022, it is obviously that marijuana use is gaining legalized. 
 
+Although people could use marijuana legally, most states are only legal for medical use and the legalization year of recreational use must be later than medical use, which is reasonable. Thus, if we have avaiable dataset, a potential meaningful research is to do the time trend of depression cases to test whether distributions of legalization time and depression cases number are consistent. 
 
+<br>
 
 
 ## Statistical Analysis (Joe)
