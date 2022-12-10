@@ -16,13 +16,13 @@ library(plotly)
 ```
 
 
-## Motivation (Alice)
+## Motivation
 
 There are around 48 million people in US using marijuana, and it could lead to various health impacts. As more and more states legalize marijuana, marijuana use has been causing significant social impacts and attracting a vast amount of public attention. The legality of marijuana use remains controversial in the US. Each state has their own restrictions on their marijuana laws for both medical and recreational purposes. Based on data from the “World Population Review,” by July 2022, 14 states have fully legalized the use of marijuana. In this project, we will evaluate the association among marijuana use and depression, and we would like to propose recommendations for future studies and policies.
 <br>
 
 
-## Research Question (A)
+## Research Question
 
 In this project, we aim to:
 
@@ -44,14 +44,16 @@ We picked the 2019 NSDUH, since it is the newest published version besides the 2
 For the process of data cleaning, first, we defined our marijuana users as people who used marijuana in the past 30 days, since the duration, frequency, and dose of marijuana use are highly related to mental health. Then, we selected the variables that we wound to focused in this project:
 
   * `age2`: age categories
+  * `mrjmon`: past month marijuana use
   * `mjrec`: time-since-last-aarijuana-sse
   * `mr30est`: marijuana frequency last month
   * `coutyp4`: county metro/nonmetro status
+  * `catag6`: six-level age category
   * `irmjage`: marijuana age of first use
   * `amdeyr`: past year major depressive episode for adult
   * `ymdeyr`: past year major depressive episode for youth
   * `irsex`: gender
-  * `newrace2`: race
+  * `newrace2`: race category
   * `eduhighcat`: education level
   * `income`: income level
   * `irmarit`: marital status
@@ -70,7 +72,7 @@ To create map and show legalization situation for marijuana use in the United St
 
 <br>
 
-## EDA  (Fengdi)
+## EDA
   
 ```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
 nsduh_df = read_csv("data/nsduh_19.csv")
@@ -310,14 +312,14 @@ graph_fendi %>%
 
 
 
-## Mapping (Joyce)   
+## Mapping
 In mapping section, we have three subtopics: where marijuana is legal in the United States, how many states legalized for marijuana use, when marijuana legaled in each State. Our goal is to visualized the marijuana legalization data clearly, which could give our audience a clear concept. At the same time, it is a supporting evidence in our research. 
 
 <br>
 
 ### Where marijuana is legal in the United States?
 
-```{r, warning = FALSE}
+```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
 legal_state_raw = read_csv("data/legalization_state.csv") 
 
 legal_state = legal_state_raw %>%
@@ -330,7 +332,7 @@ legal_state = legal_state_raw %>%
 
 ```
 
-```{r, warning = FALSE}
+```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
 data(statepop)
 
 mapping_df <-inner_join(statepop, legal_state, by = "full")
@@ -351,7 +353,7 @@ map = plot_usmap(regions = "states", data=mapping_df, values = "status",color = 
 map$layers[[2]]$aes_params$size <- 3
 ```
 
-```{r, warning = FALSE}
+```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
 ggplotly(map) %>%
   highlight("plotly_hover", selected = attrs_selected(line = list(color = "black"))) 
 ```
@@ -406,7 +408,7 @@ Although people could use marijuana legally, most states are only legal for medi
 <br>
 
 
-## Statistical Analysis (Joe)
+## Statistical Analysis
 In this section, we try to obtain the prevalence of depression across a wide range of sociodemographic characteristics for both youths and adults. And then we try to perform logistic regression to obtain the odds of depression comparing those who used marijuana in the past month to those who do not while adjusting for other covariates. 
 ```{r, message=FALSE, warning=FALSE, include=FALSE, echo = FALSE}
 data = read_csv("./data/nsduh_19.csv")
@@ -691,7 +693,7 @@ reg %>%
 ```
 * As we can see that the t-tests statistic for the term `mrjmon1` which is marijuana past month use comparing Yes to No is very large and the resulting p.value is close to zero. Our beta coefficient of the exposure variable is significant. 
 
-## Finding & Summary (Joe)
+## Finding & Summary
 * Depression was distributed unevenly across a wide range of sociodemographic variables.
 * The prevalence of youth depression was higher among female. It is also true for adults. 
 * Depression seems to be decreasing with age. The highest prevalence is among those who is youngest.  
@@ -702,7 +704,7 @@ reg %>%
 * The odds of depression is 1.935 (95% CI: 1.795 - 2.086) comparing adults who used cannabis in the past month to those who do not adjusting for age, sex, race, education, region, income, and martial status.
 
 
-## Discussion (Alice)
+## Discussion
 
 Based on the 2019 NSDUH, we observed that the prevalence of depression was distributed unevenly across different sociodemographic groups. High-risk groups for depression were identified in our study as females, people with a family annual income less than $20,000, people who are single, and people who self-identified to have more than one race. Additionally, there is a statistically significant association between marijuana use and depression. Comparing to youth who did not use cannabis in the past month, the odds of depression are 167.3% higher in youth who used cannabis in the past month. Although the magnitude of the odds ratio is smaller in the adult group, the odds of depression are still 93.5% higher comparing adults who used cannabis in the past month to those who did not. Consequently, from a public health policy point of view, we should not encourage the legalization of marijuana for recreational use. Although the FDA has approved Epidiolex, a purified form of CBD, for seizure treatment, more regulation should be added to recreational marijuana. Finally, we also want to point out the main limitation of our study we only used the 2019 data. Future studies should include data from multiple years to understand the overall trend. Also, after the COVID-19 pandemic, the prevalence of both marijuana use and depression will also yield a lot of differences. More studies are required on this controversial topic.
 
